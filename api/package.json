@@ -12,6 +12,7 @@
     "express": "~4.12.4",
     "jade": "~1.9.2",
     "morgan": "~1.5.3",
+    "node-foursquare": "^0.3.0",
     "request": "^2.55.0",
     "serve-favicon": "~2.2.1",
     "twit": "^1.1.20"
