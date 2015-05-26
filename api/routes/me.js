@@ -37,6 +37,13 @@ var Me = function(me, settings) {
 	this.router.get('/', function(req, res) {
 		res.json(me);
 	});
+
+	var middleware = settings.use;
+	for (var index in middleware) {
+		var integration = middleware[index];
+		this.use(integration.path, require("../middleware/" + integration.module));
+		console.log("Using module: " + integration.module + " on " + integration.path);
+	}
 };
 
 module.exports = new Me(me, settings);

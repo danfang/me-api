@@ -6,15 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var Me = require('./routes/me');
-var Medium = require('./middleware/medium');
-var Twitter = require('./middleware/twitter');
-var Github = require('./middleware/github');
-var Foursquare = require('./middleware/foursquare')
-
-Me.use('/blog', Medium);
-Me.use('/twitter', Twitter);
-Me.use('/code', Github);
-Me.use('/location', Foursquare);
 
 var app = express();
 
