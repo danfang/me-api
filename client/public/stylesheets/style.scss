@@ -14,6 +14,68 @@ h1, header, footer, #home {
 	text-align: center;
 }
 
+#home {
+
+	.overview {
+		margin: 150px 0;
+	}
+
+	#latest-checkin, #latest-tweet {
+		margin-bottom: 25px;
+		display: inline-block;
+		vertical-align: top;
+		max-width: 350px;
+		text-align: left;
+
+		.media-left {
+			min-width: 35px;
+			text-align: center;
+		}
+
+		.media-body {
+			padding-left: 10px;
+
+			p { margin: 0; }
+
+			.text, .shout {
+				font-size: 12px;
+			}
+
+			.date {
+				margin-top: 5px;
+				color: #aaa;
+			}
+		}
+	}
+
+}
+
+#code {
+
+	padding-top: 25px;
+
+	.github-event {
+		margin-bottom: 15px;
+
+		.fa {
+			margin-right: 10px;
+		}
+		
+		.title {
+			font-size: 16px;
+		}
+
+		.date {
+			font-size: 14px;
+			color: #aaa;
+		}
+	}
+}
+
+footer {
+	margin-top: 80px;
+}
+
 a {
   color: #00B7FF;
 }

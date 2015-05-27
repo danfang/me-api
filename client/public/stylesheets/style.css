@@ -12,6 +12,55 @@ h1, header, footer, #home {
   text-align: center;
 }
 
+#home .overview {
+  margin: 150px 0;
+}
+#home #latest-checkin, #home #latest-tweet {
+  margin-bottom: 25px;
+  display: inline-block;
+  vertical-align: top;
+  max-width: 350px;
+  text-align: left;
+}
+#home #latest-checkin .media-left, #home #latest-tweet .media-left {
+  min-width: 35px;
+  text-align: center;
+}
+#home #latest-checkin .media-body, #home #latest-tweet .media-body {
+  padding-left: 10px;
+}
+#home #latest-checkin .media-body p, #home #latest-tweet .media-body p {
+  margin: 0;
+}
+#home #latest-checkin .media-body .text, #home #latest-checkin .media-body .shout, #home #latest-tweet .media-body .text, #home #latest-tweet .media-body .shout {
+  font-size: 12px;
+}
+#home #latest-checkin .media-body .date, #home #latest-tweet .media-body .date {
+  margin-top: 5px;
+  color: #aaa;
+}
+
+#code {
+  padding-top: 25px;
+}
+#code .github-event {
+  margin-bottom: 15px;
+}
+#code .github-event .fa {
+  margin-right: 10px;
+}
+#code .github-event .title {
+  font-size: 16px;
+}
+#code .github-event .date {
+  font-size: 14px;
+  color: #aaa;
+}
+
+footer {
+  margin-top: 80px;
+}
+
 a {
   color: #00B7FF;
 }
