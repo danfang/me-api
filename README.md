@@ -1,5 +1,5 @@
 # api-me
-API Me is an open source, personal API that allows for extensible and flexible integrations. 
+API Me is an open source, personal API built on Node that allows for extensible and flexible integrations. 
 
 Check out an [example](http://api.danielfang.org) personal API. The endpoints are "/blog", "/code", "/location", "/photos", and "/twitter". 
 
@@ -11,7 +11,11 @@ These represent just a fraction of the opportunities available to you by making 
 
 ## Data Representation
 
-me.json
+Every endpoint is set up in two files: me.json, and modules.json. 
+
+me.json is a file automatically hosted on the root path "/" and represents any information you want to expose about yourself, independent of any integrations you choose. 
+
+Example me.json
 ```json
 {"me": {
     "name":"Daniel Fang",
@@ -22,7 +26,9 @@ me.json
 }
 ```
 
-modules.json
+modules.json is where the fun starts. Using custom middleware (which I'll touch on later), you can attach the data pulled from various social media feeds to specific endpoints in your API. Some APIs will require authentication, so there is a section dedicated to getting the proper keys and redirect URIs set up for each integration below. You'll see that each module is associated with a "path" (what the endpoint for this integration will be) and various "data" fields required to authenticate yourself to these APIs.
+
+Example modules.json
 ```json
 {
 	"medium": {
@@ -165,3 +171,46 @@ Not Completed/Potential Integrations
 - Runkeeper
 - Venmo
 - Fitbit
+
+## Custom Middleware
+
+The most powerful part of API Me is the possibility of making and using custom middleware for any kind of social media or analytics purposes (think Slack integrations). To do this, there is a specific format for middleware, shown below.
+
+```javascript
+var request = require('request');
+var handleError = require('../util/util');
+var cache = require('memory-cache');
+
+var Github = {
+	source: "github", // The name of your module, which will be referenced in modules.json
+	
+	// Below are all available routes for this piece of middleware. Notice the root "path" should be "", so that the user 
+	// can mount this module on any path in modules.json. For example, if the user mounts this module on "/code",
+	// the following route will handle "/code" and an additional route with path "/stats" will handle "/code/stats".
+	routes: [
+		{
+			method: "GET",
+			path: "",
+			// The handler operates like any normal express route with a request, response, and next.
+			handler: function(req, res) {
+				// Leveraging caches is important to not exceed rate limits on various APIs
+				var cachedResult = cache.get('github');
+				if (cachedResult) return res.json(cachedResult);
+				
+				// Referencing "this" accesses the "data" object in modules.json. This is how to access
+				// user-specified keys and usernames.
+				var url = 'https://api.github.com/users/' + this.me + "/events/public";
+				request({ url: url, headers: { 'User-Agent': this.me }}, function(err, response, body) {
+					if (err || response.statusCode != 200) return handleError(err, res);
+					var data = JSON.parse(body);
+					cache.put('github', data, 1000 * 60 * 2);
+					console.log('cache miss');
+					return res.json(data);
+				});
+			}
+		}
+	],
+}
+
+module.exports = Github;
+```
