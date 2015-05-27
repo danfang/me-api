@@ -10,7 +10,7 @@ var App = React.createClass({
   render: function () {
     return (
       <div>
-        <header>
+        <header id="nav">
           <ul>
             <li><Link to="app">Home</Link></li>
             <li><Link to="blog">Blog</Link></li>
@@ -22,6 +22,10 @@ var App = React.createClass({
         </header>
 
         <RouteHandler/>
+
+        <footer>
+        	<p>Made with Me API</p>
+        </footer>
       </div>
     );
   }
@@ -41,7 +45,7 @@ var Home = React.createClass({
 		var me = this.state.me;
 		if (!me) return <div></div>;
 		return (
-			<div>
+			<div id="home">
 				<h1>Home</h1>
 				<h2>{me.name}</h2>
 				<p>{me.bio}</p>

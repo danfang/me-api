@@ -44,8 +44,8 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint']
+      files: ['public/stylesheets/style.scss'],
+      tasks: ['sass']
     }
   });
 
@@ -56,6 +56,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
 
 
-  grunt.registerTask('default', ['jshint', 'sass', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'sass']);
 
 };

@@ -3,6 +3,17 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+#nav {
+	li {
+		display: inline-block;
+		margin: 0 50px;
+	}
+}
+
+h1, header, footer, #home {
+	text-align: center;
+}
+
 a {
   color: #00B7FF;
 }
