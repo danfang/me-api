@@ -3,7 +3,6 @@ var cache = require('memory-cache');
 var handleError = require('../util/util');
 
 var Twitter = {
-	type: "social",
 	source: "twitter",
 	routes: [
 		{ 

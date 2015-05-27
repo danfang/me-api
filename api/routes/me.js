@@ -5,11 +5,12 @@ var router = express.Router();
 var me = JSON.parse(fs.readFileSync('me.json', 'utf8'));
 var modules = JSON.parse(fs.readFileSync('modules.json', 'utf8'));
 
-var Me = function(me, settings) {
+var Me = function(me, modules) {
 	this.router = express.Router();
 	this.routes = [];
 	this.use = function(path, middleware) {
-		var data = modules[middleware.source].data;
+		var data = modules.modules[middleware.source].data;
+		data.host = modules.settings.host;
 
 		if (middleware.pre) {
 			middleware.pre(data);
@@ -31,8 +32,8 @@ var Me = function(me, settings) {
 		res.json({ me: me, routes: this.routes });
 	}.bind(this));
 
-	for (var module in modules) {
-		var settings = modules[module];
+	for (var module in modules.modules) {
+		var settings = modules.modules[module];
 		this.use(settings.path, require("../middleware/" + module));
 		console.log("Using module: " + module + " on " + settings.path);
 	}

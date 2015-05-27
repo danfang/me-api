@@ -3,7 +3,6 @@ var cache = require('memory-cache');
 var handleError = require('../util/util').handleError;
 
 var Instagram = {
-	type: "photos",
 	source: "instagram",
 	routes: [
 		{

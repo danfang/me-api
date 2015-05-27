@@ -31,51 +31,56 @@ modules.json is where the fun starts. Using custom middleware (which I'll touch 
 Example modules.json
 ```json
 {
-	"medium": {
-		"path": "/blog",
-		"data": {
-			"me": ""
-		}
-	}, 
-	"twitter": {
-		"path": "/twitter",
-		"data": {
-			"me": "",
-			"secrets": {
-				"consumer_key": "",
-				"consumer_secret": "",
-				"access_token": "",
-				"access_token_secret": ""
+	"settings": {
+		"host": "api.foo.com"
+	},
+	"modules": {
+		"medium": {
+			"path": "/blog",
+			"data": {
+				"me": ""
 			}
-		}
-	}, 
-	"instagram": {
-		"path": "/photos",
-		"data": {
-			"me": "",
-			"host": "",
-			"secrets": {
-				"client_id": "",
-				"client_secret": "",
-				"access_token": ""
+		}, 
+		"twitter": {
+			"path": "/twitter",
+			"data": {
+				"me": "",
+				"secrets": {
+					"consumer_key": "",
+					"consumer_secret": "",
+					"access_token": "",
+					"access_token_secret": ""
+				}
 			}
-		}
-	}, 
-	"foursquare": {
-		"path": "/location",
-		"data": {
-			"host": "",
-			"secrets": {
-				"clientId": "",
-				"clientSecret": ""
-			},
-			"accessToken": ""
-		}
-	}, 
-	"github": {
-		"path": "/code",
-		"data": {
-			"me": ""
+		}, 
+		"instagram": {
+			"path": "/photos",
+			"data": {
+				"me": "",
+				"host": "",
+				"secrets": {
+					"client_id": "",
+					"client_secret": "",
+					"access_token": ""
+				}
+			}
+		}, 
+		"foursquare": {
+			"path": "/location",
+			"data": {
+				"host": "",
+				"secrets": {
+					"clientId": "",
+					"clientSecret": ""
+				},
+				"accessToken": ""
+			}
+		}, 
+		"github": {
+			"path": "/code",
+			"data": {
+				"me": ""
+			}
 		}
 	}
 }
@@ -130,7 +135,6 @@ For a live demo, check out this [basic client](http://code.danielfang.org:4000/#
 	"path": "/photos",
 	"data": {
 		"me": "myusername",
-		"host": "http://api.foo.com",
 		"secrets": {
 			"client_id": "",
 			"client_secret": "",
@@ -152,7 +156,6 @@ For this configuration, I am hosting the Instagram module at "http://api.foo.com
 "foursquare": {
 	"path": "/location",
 	"data": {
-		"host": "http://api.foo.com",
 		"secrets": {
 			"clientId": "",
 			"clientSecret": ""

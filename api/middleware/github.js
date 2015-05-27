@@ -3,7 +3,6 @@ var handleError = require('../util/util');
 var cache = require('memory-cache');
 
 var Github = {
-	type: "code",
 	source: "github",
 	routes: [
 		{

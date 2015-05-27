@@ -22,7 +22,6 @@ var parseJson = function(str) {
 };
 
 var Medium = {
-	type: "blog",
 	source: "medium",
 	routes: [
 		{ 
