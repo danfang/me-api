@@ -28,4 +28,4 @@ build/Release
 node_modules
 
 me.json
-settings.json
+modules.json
