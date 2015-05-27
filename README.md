@@ -123,7 +123,7 @@ For a live demo, check out this [basic client](http://code.danielfang.org:4000/#
 
 ### Instagram
 
-1. Go to the [Instagram Clients](https://instagram.com/developer/clients/) page and create a new client.
+1. Go to the [Instagram Clients](https://instagram.com/developer/clients/manage/) page and create a new client.
 2. Make sure the "Redirect URI" field points to the "host" + "path" + "/login/redirect" in your modules.json file and that this is the same as where you are hosting your API. Look at this example configuration.
 ```json
 "instagram": {
