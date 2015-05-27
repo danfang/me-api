@@ -15,93 +15,51 @@ Every endpoint is set up in two files: me.json, and modules.json.
 
 me.json is a file automatically hosted on the root path "/" and represents any information you want to expose about yourself, independent of any integrations you choose. 
 
-Example me.json
+Simple me.json
 ```json
 {
-    "name":"Daniel Fang",
-    "bio":"About me",
-    "contact": {},
-    "work": [],
-    "projects": []
+    "name":"Daniel Fang"
 }
 ```
 
 modules.json is where the fun starts. Using custom middleware (which I'll touch on later), you can attach the data pulled from various social media feeds to specific endpoints in your API. Some APIs will require authentication, so there is a section dedicated to getting the proper keys and redirect URIs set up for each integration below. You'll see that each module is associated with a "path" (what the endpoint for this integration will be) and various "data" fields required to authenticate yourself to these APIs.
 
-Example modules.json
+Simple modules.json
 ```json
-{
-	"settings": {
-		"host": "api.foo.com"
-	},
-	"modules": {
-		"medium": {
-			"path": "/blog",
-			"data": {
-				"me": ""
-			}
-		}, 
-		"twitter": {
-			"path": "/twitter",
-			"data": {
-				"me": "",
-				"secrets": {
-					"consumer_key": "",
-					"consumer_secret": "",
-					"access_token": "",
-					"access_token_secret": ""
-				}
-			}
-		}, 
-		"instagram": {
-			"path": "/photos",
-			"data": {
-				"me": "",
-				"host": "",
-				"secrets": {
-					"client_id": "",
-					"client_secret": "",
-					"access_token": ""
-				}
-			}
-		}, 
-		"foursquare": {
-			"path": "/location",
-			"data": {
-				"host": "",
-				"secrets": {
-					"clientId": "",
-					"clientSecret": ""
-				},
-				"accessToken": ""
-			}
-		}, 
-		"github": {
-			"path": "/code",
-			"data": {
-				"me": ""
-			}
-		}
-	}
-}
-
+ {
+     "settings": {
+         "host": "localhost:3000"
+     },
+     "modules": {
+         "medium": {
+             "path": "/blog",
+             "data": {
+                 "me": "@myusername"
+             }
+         },
+         "github": {
+             "path": "/code",
+             "data": {
+                 "me": "myusername"
+             }
+         }
+     }
+ }
 ```
 
-## Server
+## Installing and Running
 
 ```bash
-npm start
+(sudo) npm install me-api-server -g
+me-api-server [port]
 ```
 
-This will run the API on port 3000. In the example above, you will get:
+This will run the API on given port. Using the modules.json (in the directory you're running the server from) in the example above, you will get:
 - / hosting "me.json"
 - /blog running the Medium module
 - /code running the Github module
-- /location running the Foursquare module
-- /photos running the Instagram module
-- /twitter running the Twitter module
 
-For a live demo, go to [my API](http://api.danielfang.org) to see the following integrations.
+For a live demo, go to [my API](http://api.danielfang.org) to see more integrations.
  
 ## External Client
 
@@ -114,10 +72,26 @@ For a live demo, check out this [basic client](http://code.danielfang.org:4000/#
 ### Github
 
 1. Enter in your github username to the "me" section in modules.json.
+```json
+"github": {
+	"path": "/code",
+	"data": {
+		"me": "danfang"
+	}
+}                         
+```
 
 ### Medium
 
 1. Enter in your medium username with the @ symbol in the "me" section of modules.json
+```json
+"medium": {
+	"path": "/blog",
+	"data": {
+		"me": "@amyngyn"
+	}
+},
+```
 
 ### Twitter
 
@@ -125,6 +99,21 @@ For a live demo, check out this [basic client](http://code.danielfang.org:4000/#
 2. After you've created an app (the specific settings are not important), go to the "Keys and Access Tokens" page.
 3. Copy and paste the "Consumer Key", "Consumer Secret", "Access Token", and "Access Key" into the modules.json file as seen above under the "twitter" module".
 4. Enter in your twitter username (without the @) as "me" in the "twitter" module.
+
+```json
+"twitter": {                                                                         
+	"path": "/twitter",                                                              
+	"data": {                                                                        
+		"me": "username",                                                          
+		"secrets": {                                                                 
+			"consumer_key": "aaa",                             
+			"consumer_secret": "bbb", 
+			"access_token": "ccc",    
+			"access_token_secret": "ddd"   
+		}                                                                            
+	}                                                                                
+}
+```
 
 ### Instagram
 
@@ -134,11 +123,11 @@ For a live demo, check out this [basic client](http://code.danielfang.org:4000/#
 "instagram": {
 	"path": "/photos",
 	"data": {
-		"me": "myusername",
+		"me": "username",
 		"secrets": {
-			"client_id": "",
-			"client_secret": "",
-			"access_token": ""
+			"client_id": "aaa",
+			"client_secret": "bbb",
+			"access_token": "ccc"
 		}
 	}
 } 
@@ -157,10 +146,10 @@ For this configuration, I am hosting the Instagram module at "http://api.foo.com
 	"path": "/location",
 	"data": {
 		"secrets": {
-			"clientId": "",
-			"clientSecret": ""
+			"clientId": "aaa",
+			"clientSecret": "bbb"
 		},
-		"accessToken": ""
+		"accessToken": "ccc"
 	}
 }, 
 ```
