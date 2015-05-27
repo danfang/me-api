@@ -4,10 +4,7 @@ var handleError = require('../util/util');
 
 var fetchPosts = function(user, callback) {
 	var cachedResult = cache.get('medium');
-	if (cachedResult) {
-		console.log('cache hit');
-		return callback(null, cachedResult);
-	}
+	if (cachedResult) return callback(null, cachedResult);
 
 	request('https://medium.com/' + user + "?format=json", function(err, response, body) {
 		if (err || response.statusCode != 200) return callback(err, body);
@@ -47,13 +44,10 @@ var Medium = {
 					if (err) return handleError(err, res);
 
 					var post = latestPosts[req.params.index];
-					if (!post) return res.status(404).json({ err: 'Invalid post index' });
+					if (!post) return handleError('Invalid post index', res);
 
 					var cachedResult = cache.get('medium-' + post.id);
-					if (cachedResult) {
-						console.log('cache hit');
-						return res.json(cachedResult);
-					}
+					if (cachedResult) return res.json(cachedResult);
 
 					var url = 'https://medium.com/' + me + "/" + post.id + "?format=json";
 					request(url, function(err, response, body) {
