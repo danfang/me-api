@@ -1,5 +1,5 @@
-# api-me
-API Me is an open source, personal API built on Node that allows for extensible and flexible integrations. 
+# me-api
+Me API is an open source, personal API built on Node that allows for extensible and flexible integrations. 
 
 Check out an [example](http://api.danielfang.org) personal API. The endpoints are "/blog", "/code", "/location", "/photos", and "/twitter". 
 
