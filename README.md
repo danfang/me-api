@@ -7,31 +7,67 @@ This is a central repository for your entire online profile. You get to host the
 
 me.json
 ```json
-{
-    "name": "Daniel Fang",
-    "bio": "Student @ UW CSE & Software Engineering Intern @ Wealthfront",
-    "blog": {
-        "medium": "@danfang"
-    },
-    "code": {
-        "github": "danfang"
-    },
-    "social": {
-        "twitter": "thedanfang"
-    }
+{"me": {
+    "name":"Daniel Fang",
+    "bio":"About me",
+    "contact": {},
+    "work": [],
+    "projects": []
 }
 ```
 
-settings.json
+modules.json
 ```json
 {
-    "twitter": {
-        "consumer_key": "",
-        "consumer_secret": "",
-        "access_token": "",
-        "access_token_secret": ""
-    }
+	"medium": {
+		"path": "/blog",
+		"data": {
+			"me": ""
+		}
+	}, 
+	"twitter": {
+		"path": "/twitter",
+		"data": {
+			"me": "",
+			"secrets": {
+				"consumer_key": "",
+				"consumer_secret": "",
+				"access_token": "",
+				"access_token_secret": ""
+			}
+		}
+	}, 
+	"instagram": {
+		"path": "/photos",
+		"data": {
+			"me": "",
+			"host": "",
+			"secrets": {
+				"client_id": "",
+				"client_secret": "",
+				"access_token": ""
+			}
+		}
+	}, 
+	"foursquare": {
+		"path": "/location",
+		"data": {
+			"host": "",
+			"secrets": {
+				"clientId": "",
+				"clientSecret": ""
+			},
+			"accessToken": ""
+		}
+	}, 
+	"github": {
+		"path": "/code",
+		"data": {
+			"me": ""
+		}
+	}
 }
+
 ```
 
 ## Server
@@ -41,40 +77,16 @@ npm start
 ```
 
 This will run the API on port 3000.
-
-### Endpoints
-
-Done
-
-| HTTP Verb | Path | Description |
-| --------- | ---- | ----------- |
-| GET | / | Basic overview |
-| GET | /blog | Recent Medium blog posts |
-| GET | /blog/:index | Specific blog posts |
-| GET | /code | Latest Github events |
-| GET | /twitter | Latest Tweets |
-
-TBD
-
-| HTTP Verb | Path | Description |
-| --------- | ---- | ----------- |
-| GET | /twitter/followers | Twitter followers |
-| GET | /posts | Facebook Posts | 
-| GET | /health | Summary of Fitbit, Runkeeper, etc |
-| GET | /schedule | Calendars |
-| GET | /location | Last known location |
-| POST | /pay | Payment portal |
-| POST | /message | Messaging system |
  
-## Client-interface
-
 ## External Client
 
 ## Integrations
-- Facebook
 - Twitter
 - Instagram
 - Github
-- Fitbit
+- Swarm by Foursquare
+
+Not Completed/Potential Integrations
 - Runkeeper
 - Venmo
+- Fitbit
