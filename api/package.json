@@ -12,6 +12,7 @@
     "express": "~4.12.4",
     "instagram-node": "^0.5.7",
     "jade": "~1.9.2",
+    "memory-cache": "^0.1.2",
     "morgan": "~1.5.3",
     "node-foursquare": "^0.3.0",
     "request": "^2.55.0",

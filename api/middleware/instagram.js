@@ -1,4 +1,5 @@
 var ig = require('instagram-node').instagram();
+var cache = require('memory-cache');
 var handleError = require('../util/util').handleError;
 
 var Instagram = {
@@ -9,14 +10,24 @@ var Instagram = {
 			method: "GET",
 			path: "",
 			handler: function(req, res) {
+				var cachedResult = cache.get('instagram');
+				if (cachedResult) {
+					console.log('cache hit');
+					return res.json(cachedResult);
+				}
+
 				var accessToken = this.settings.instagram.access_token;
 				if (!accessToken) {
 					return res.status(404).json({ err: "You have not specified an access Token yet"});
 				}
+				
 				ig.use(this.settings.instagram);
 				ig.user_self_feed(function(err, media, pag) {
 					if (err) return handleError(err, res);
-					res.json({ photos: media });
+					var data = { photos: media };
+					cache.put('instagram', data, 1000 * 30);
+					console.log('cache miss');
+					res.json(data);
 				});
 			}
 		},

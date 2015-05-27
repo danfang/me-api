@@ -1,12 +1,21 @@
 var request = require('request');
+var cache = require('memory-cache');
 var handleError = require('../util/util');
 
 var fetchPosts = function(user, callback) {
+	var cachedResult = cache.get('medium');
+	if (cachedResult) {
+		console.log('cache hit');
+		return callback(null, cachedResult);
+	}
+
 	request('https://medium.com/' + user + "?format=json", function(err, response, body) {
 		if (err || response.statusCode != 200) return callback(err, body);
 		var data = parseJson(body);
 		if (!data.success) return callback({ success: false }, body);
 		var latest = data.payload.latestPosts;
+		cache.put('medium', latest, 1000 * 60 * 60);
+		console.log('cache miss');
 		return callback(null, latest);
 	})
 };
@@ -25,7 +34,7 @@ var Medium = {
 			handler: function(req, res) {
 				fetchPosts(this.me, function(err, latestPosts) {
 					if (err) return handleError(err, res);
-					res.json({ posts: latestPosts });
+					res.json(latestPosts);
 				});
 			} 
 		},
@@ -40,14 +49,21 @@ var Medium = {
 					var post = latestPosts[req.params.index];
 					if (!post) return res.status(404).json({ err: 'Invalid post index' });
 
+					var cachedResult = cache.get('medium-' + post.id);
+					if (cachedResult) {
+						console.log('cache hit');
+						return res.json(cachedResult);
+					}
+
 					var url = 'https://medium.com/' + me + "/" + post.id + "?format=json";
 					request(url, function(err, response, body) {
 						if (err || response.statusCode != 200) return handleError(err, res);
 						var data = parseJson(body);
-						if (data.success) {
-							return res.json({ post: data.payload.value });
-						}
-						return res.status(404).json({ success: false });
+						if (!data.success) return handleError(data, res);
+						var payloadValue = data.payload.value;
+						cache.put('medium-' + post.id, payloadValue, 1000 * 60 * 60);
+						console.log('cache miss');
+						return res.json(payloadValue);
 					});
 				});
 			} 

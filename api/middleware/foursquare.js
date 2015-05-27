@@ -1,4 +1,5 @@
 var foursquare = require('node-foursquare');
+var cache = require('memory-cache');
 var handleError = require('../util/util').handleError;
 
 var getFoursquare = function(req, settings) {
@@ -16,6 +17,12 @@ var Foursquare = {
 			method: "GET",
 			path: "",
 			handler: function(req, res) {
+				var cachedResult = cache.get('foursquare');
+				if (cachedResult) {
+					console.log('cache hit');
+					return res.json(cachedResult);
+				}
+
 				var accessToken = this.settings.foursquare.accessToken;
 				if (!accessToken) {
 					return res.status(404).json({ err: "You have not specified an access Token yet"});
@@ -23,6 +30,8 @@ var Foursquare = {
 				var fs = getFoursquare(req, this.settings);
 				fs.Users.getCheckins('self', {}, accessToken, function(err, checkins) {
 					if (err) return handleError(err, res);
+					cache.put('foursquare', checkins, 1000 * 60);
+					console.log('cache miss');
 					res.json(checkins);
 				});
 			}
