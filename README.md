@@ -10,12 +10,9 @@ me.json
 {"me": {
     "name":"Daniel Fang",
     "bio":"About me",
-    "contact": {
-        "facebook":
-        ...
-    },
-    "work": [...],
-    "projects": [...]
+    "contact": {},
+    "work": [],
+    "projects": []
 }
 ```
 
@@ -80,40 +77,16 @@ npm start
 ```
 
 This will run the API on port 3000.
-
-### Endpoints
-
-Done
-
-| HTTP Verb | Path | Description |
-| --------- | ---- | ----------- |
-| GET | / | Basic overview |
-| GET | /blog | Recent Medium blog posts |
-| GET | /blog/:index | Specific blog posts |
-| GET | /code | Latest Github events |
-| GET | /twitter | Latest Tweets |
-
-TBD
-
-| HTTP Verb | Path | Description |
-| --------- | ---- | ----------- |
-| GET | /twitter/followers | Twitter followers |
-| GET | /posts | Facebook Posts | 
-| GET | /health | Summary of Fitbit, Runkeeper, etc |
-| GET | /schedule | Calendars |
-| GET | /location | Last known location |
-| POST | /pay | Payment portal |
-| POST | /message | Messaging system |
  
-## Client-interface
-
 ## External Client
 
 ## Integrations
-- Facebook
 - Twitter
 - Instagram
 - Github
-- Fitbit
+- Swarm by Foursquare
+
+Not Completed/Potential Integrations
 - Runkeeper
 - Venmo
+- Fitbit
