@@ -1,6 +1,6 @@
 {
   "name": "me-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/app.js",
   "bin": {
     "me-api": "./bin/www"
