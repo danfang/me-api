@@ -12,13 +12,15 @@ var App = React.createClass({
       <div className="container">
         <header id="nav">
           <ul>
-            <li><Link to="app">Home</Link></li>
+            <li><Link to="home">Home</Link></li>
             <li><Link to="blog">Blog</Link></li>
             <li><Link to="code">Code</Link></li>
           </ul>
         </header>
 
-        <RouteHandler/>
+        <div id="content">
+        	<RouteHandler/>
+        </div>
 
         <footer>
         	<p>Made with Me API &amp; React &amp; Sass</p>
@@ -121,18 +123,50 @@ var Blog = React.createClass({
 		var postNodes = this.state.posts.map(function(post, index) {
 			var paragraphs = post.previewContent.bodyModel.paragraphs;
 			var paragraphNodes = paragraphs.map(function(paragraph) {
-				return <p>{paragraph.text}</p>;
+				if (paragraph.text === post.title) {
+					return <Link to="post" params={{postId: index}}><p className={"medium-" + paragraph.type}>{paragraph.text}</p></Link>;
+				}
+				return <p className={"medium-" + paragraph.type}>{paragraph.text}</p>;
 			});
-			return <div>{paragraphNodes}</div>;
+			return <div className="post">{paragraphNodes}</div>;
 		});
 		return (
-			<div>
-				<h1>Blog</h1>
+			<div id="blog">
 				{postNodes}
 			</div>
 		);
 	}}
 );
+
+var Post = React.createClass({  
+	contextTypes: {
+	    router: React.PropTypes.func
+  	},
+	getInitialState: function() {
+		return { post: null };
+	},
+	componentDidMount: function() {
+		var postId = this.context.router.getCurrentParams().postId;
+		$.get(API_URL + "blog/" + postId, function(data) {
+			console.log(data);
+			this.setState({ post: data });
+		}.bind(this));
+	},
+	render: function() { 
+		if (!this.state.post) return <div></div>;
+		var post = this.state.post;
+		var paragraphNodes = post.content.bodyModel.paragraphs.map(function(paragraph){
+			return <p className={"medium-" + paragraph.type}>{paragraph.text}</p>;
+		});
+		return (
+			<div id="post">
+				<h1>{post.title}</h1>
+				<h2>{post.content.subtitle}</h2>
+				{paragraphNodes}
+			</div>
+		);
+	}
+});
 
 var Code = React.createClass({	
 	getInitialState: function() {
@@ -205,11 +239,15 @@ var PushEvent = React.createClass({
 		);
 	}
 });
+
 var routes = (
   <Route name="app" path="/" handler={App}>
-    <Route name="blog" handler={Blog}/>
+    <DefaultRoute name="home" handler={Home}/>
+    <Route name="blog" handler={RouteHandler}>
+    	<Route name="post" path=":postId" handler={Post}/>
+    	<DefaultRoute handler={Blog}/>
+    </Route>
     <Route name="code" handler={Code}/>
-    <DefaultRoute handler={Home}/>
   </Route>
 );
 

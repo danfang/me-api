@@ -3,6 +3,10 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+a, a:hover, a:focus {
+	text-decoration: none;
+}
+
 #nav {
 	li {
 		display: inline-block;
@@ -14,10 +18,16 @@ h1, header, footer, #home {
 	text-align: center;
 }
 
+header {
+	.active {
+		border-bottom: 2px solid black;
+	}
+}
+
 #home {
 
 	.overview {
-		margin: 150px 0;
+		margin: 100px 0 150px 0;
 	}
 
 	#latest-checkin, #latest-tweet {
@@ -51,16 +61,14 @@ h1, header, footer, #home {
 }
 
 #code {
-
-	padding-top: 25px;
-
 	.github-event {
 		margin-bottom: 15px;
 
 		.fa {
 			margin-right: 10px;
+			color: #666;
 		}
-		
+
 		.title {
 			font-size: 16px;
 		}
@@ -72,10 +80,48 @@ h1, header, footer, #home {
 	}
 }
 
-footer {
-	margin-top: 80px;
+#content {
+	padding-top: 50px;
+	max-width: 750px;
+	margin: auto;
 }
 
-a {
-  color: #00B7FF;
+#blog {
+
+	.post {
+		margin-bottom: 35px;
+
+		p.medium-3, p.medium-2 {
+			font-size: 22px;
+			font-weight: 700;
+		}
+
+		p.medium-13 {
+			color: #aaa;
+			font-weight: 300;
+			font-size: 16px;
+		}
+	}
+
+}
+
+#post {
+	h1 {
+		font-size: 60px;
+		text-align: left;
+	}
+	h2 {
+		font-style: 30px;
+		font-weight: 300;
+	}
+	p {
+		line-height: 25px;
+		font-size: 18px;
+		font-weight: 300;
+		margin: 20px 0;
+	}
+}
+
+footer {
+	margin-top: 80px;
 }
