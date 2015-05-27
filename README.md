@@ -17,7 +17,7 @@ me.json is a file automatically hosted on the root path "/" and represents any i
 
 Example me.json
 ```json
-{"me": {
+{
     "name":"Daniel Fang",
     "bio":"About me",
     "contact": {},
