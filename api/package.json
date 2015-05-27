@@ -1,7 +1,10 @@
 {
-  "name": "api",
-  "version": "0.0.0",
-  "private": true,
+  "name": "me-api",
+  "version": "1.0.0",
+  "main": "lib/app.js",
+  "bin": {
+    "me-api": "./bin/www"
+  },
   "scripts": {
     "start": "node ./bin/www"
   },
@@ -18,5 +21,7 @@
     "request": "^2.55.0",
     "serve-favicon": "~2.2.1",
     "twit": "^1.1.20"
-  }
+  },
+  "author": "Daniel Fang <danfang@uw.edu>",
+  "license": "MIT"
 }
