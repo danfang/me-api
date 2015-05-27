@@ -33,7 +33,7 @@ var Instagram = {
 				var accessToken = this.secrets.access_token;
 				if (accessToken) return handleError("This user already has a valid access token", res);
 
-				ig.use(this.settings.instagram);
+				ig.use(this.secrets);
 				var redirectUrl = req.protocol + '://' + this.host + req.originalUrl + "/redirect";
 				res.redirect(ig.get_authorization_url(redirectUrl));
 			}
@@ -45,7 +45,7 @@ var Instagram = {
 				var accessToken = this.secrets.access_token;
 				if (accessToken) return handleError("This user already has a valid access token", res);
 
-				ig.use(this.settings.instagram);
+				ig.use(this.secrets);
 				var redirectUrl = req.protocol + '://' + this.host + req.originalUrl.split("?")[0];
 				ig.authorize_user(req.query.code, redirectUrl, function(err, result) {
 				    if (err) return handleError(err, res);
