@@ -1,7 +1,9 @@
 {
-  "name": "client",
-  "version": "0.0.0",
-  "private": true,
+  "name": "api-me-client",
+  "author": "Daniel Fang <danfang@uw.edu>",
+  "license": "MIT",
+  "version": "1.0.0",
+  "main": "lib/app.js",
   "scripts": {
     "start": "node ./bin/www"
   },
