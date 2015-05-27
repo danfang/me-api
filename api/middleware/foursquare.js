@@ -2,9 +2,9 @@ var foursquare = require('node-foursquare');
 var cache = require('memory-cache');
 var handleError = require('../util/util').handleError;
 
-var getFoursquare = function(req, settings) {
-	var settings = { secrets: settings.foursquare.secrets }; 
-	var redirectUrl = req.protocol + '://' + req.get('host') + req.originalUrl + "/redirect";
+var getFoursquare = function(req, data) {
+	var settings = { secrets: data.secrets }; 
+	var redirectUrl = req.protocol + '://' + data.host + req.originalUrl + "/redirect";
 	settings.secrets.redirectUrl = redirectUrl;
 	return foursquare(settings);
 }
@@ -18,16 +18,12 @@ var Foursquare = {
 			path: "",
 			handler: function(req, res) {
 				var cachedResult = cache.get('foursquare');
-				if (cachedResult) {
-					console.log('cache hit');
-					return res.json(cachedResult);
-				}
+				if (cachedResult) return res.json(cachedResult);
 
-				var accessToken = this.settings.foursquare.accessToken;
-				if (!accessToken) {
-					return res.status(404).json({ err: "You have not specified an access Token yet"});
-				}
-				var fs = getFoursquare(req, this.settings);
+				var accessToken = this.accessToken;
+				if (!accessToken) return handleError("You have not specified an access Token yet", res);
+
+				var fs = getFoursquare(req, this);
 				fs.Users.getCheckins('self', {}, accessToken, function(err, checkins) {
 					if (err) return handleError(err, res);
 					cache.put('foursquare', checkins, 1000 * 60);
@@ -40,26 +36,19 @@ var Foursquare = {
 			method: "GET",
 			path: "/login",
 			handler: function(req, res) {
-				if (this.settings.foursquare.accessToken) {
-					return res.status(404).json({ err: "This user already has a valid access token"});
-				}
-				var fs = getFoursquare(req, this.settings);
-				console.log(fs.getAuthClientRedirectUrl());
-				res.writeHead(303, { 'location': fs.getAuthClientRedirectUrl() });
-  				res.end();
+				if (this.accessToken) return handleError("This user already has a valid access token", res);
+				var fs = getFoursquare(req, this);
+				res.redirect(fs.getAuthClientRedirectUrl());
 			}
 		},		
 		{
 			method: "GET",
 			path: "/login/redirect",
 			handler: function(req, res) {
-				if (this.settings.foursquare.accessToken) {
-					return res.status(404).json({ err: "This user already has a valid access token"});
-				}
-				var fs = getFoursquare(req, this.settings);
+				if (this.accessToken) return handleError("This user already has a valid access token", res);
+				var fs = getFoursquare(req, this);
 				fs.getAccessToken({ code: req.query.code }, function(err, accessToken) {
 					if (err) return handleError(err, res);
-					console.log(accessToken);
 					res.json({ token: accessToken });
 				});
 			}

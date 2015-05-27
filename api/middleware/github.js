@@ -11,10 +11,8 @@ var Github = {
 			path: "",
 			handler: function(req, res) {
 				var cachedResult = cache.get('github');
-				if (cachedResult) {
-					console.log('cache hit');
-					return res.json(cachedResult);
-				}
+				if (cachedResult) return res.json(cachedResult);
+				
 				var url = 'https://api.github.com/users/' + this.me + "/events/public";
 				request({ url: url, headers: { 'User-Agent': this.me }}, function(err, response, body) {
 					if (err || response.statusCode != 200) return handleError(err, res);

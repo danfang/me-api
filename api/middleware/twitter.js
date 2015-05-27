@@ -11,10 +11,8 @@ var Twitter = {
 			path: "",
 			handler: function(req, res) {
 				var cachedResult = cache.get('twitter');
-				if (cachedResult) {
-					console.log('cache hit');
-					return res.json(cachedResult);
-				}
+				if (cachedResult) return res.json(cachedResult);
+				
 				this.Twitter.get('/statuses/user_timeline', { screen_name: this.me }, function(err, data, response) {
 					if (err) return handleError(err, res);
 					var data = { tweets: data };
@@ -26,7 +24,7 @@ var Twitter = {
 		}
 	],
 	pre: function(data) {
-		data.Twitter = new Twit(data.settings.twitter);
+		data.Twitter = new Twit(data.secrets);
 	},
 }
 

@@ -11,17 +11,12 @@ var Instagram = {
 			path: "",
 			handler: function(req, res) {
 				var cachedResult = cache.get('instagram');
-				if (cachedResult) {
-					console.log('cache hit');
-					return res.json(cachedResult);
-				}
+				if (cachedResult) return res.json(cachedResult);
 
-				var accessToken = this.settings.instagram.access_token;
-				if (!accessToken) {
-					return res.status(404).json({ err: "You have not specified an access Token yet"});
-				}
-				
-				ig.use(this.settings.instagram);
+				var accessToken = this.secrets.access_token;
+				if (!accessToken) return handleError("You have not specified an access Token yet", res);
+
+				ig.use(this.secrets);
 				ig.user_self_feed(function(err, media, pag) {
 					if (err) return handleError(err, res);
 					var data = { photos: media };
@@ -35,10 +30,9 @@ var Instagram = {
 			method: "GET",
 			path: "/login",
 			handler: function(req, res) {
-				var accessToken = this.settings.instagram.access_token;
-				if (accessToken) {
-					return res.status(404).json({ err: "This user already has a valid access token"});
-				}
+				var accessToken = this.secrets.access_token;
+				if (accessToken) return handleError("This user already has a valid access token", res);
+
 				ig.use(this.settings.instagram);
 				var redirectUrl = req.protocol + '://' + req.get('host') + req.originalUrl + "/redirect";
 				res.redirect(ig.get_authorization_url(redirectUrl));
@@ -48,9 +42,9 @@ var Instagram = {
 			method: "GET",
 			path: "/login/redirect",
 			handler: function(req, res) {
-				if (this.settings.instagram.access_token) {
-					return res.status(404).json({ err: "This user already has a valid access token"});
-				}
+				var accessToken = this.secrets.access_token;
+				if (accessToken) return handleError("This user already has a valid access token", res);
+
 				ig.use(this.settings.instagram);
 				var redirectUrl = req.protocol + '://' + req.get('host') + req.originalUrl.split("?")[0];
 				ig.authorize_user(req.query.code, redirectUrl, function(err, result) {

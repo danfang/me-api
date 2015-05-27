@@ -3,47 +3,39 @@ var express = require('express');
 var router = express.Router();
 
 var me = JSON.parse(fs.readFileSync('me.json', 'utf8'));
-var settings = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
+var modules = JSON.parse(fs.readFileSync('modules.json', 'utf8'));
 
 var Me = function(me, settings) {
 	this.router = express.Router();
+	this.routes = [];
 	this.use = function(path, middleware) {
-		if (!middleware.type || !middleware.source) {
-			throw new Error("Middleware error: must require 'type' and 'source'");
-		}
-
-		if (!me[middleware.type] || !me[middleware.type][middleware.source]) {
-			throw new Error("User error: me.json requires " + middleware.type + "." + middleware.source);
-		}
-
-		var data = {
-			me: me[middleware.type][middleware.source],
-			settings: settings,
-		};
+		var data = modules[middleware.source].data;
 
 		if (middleware.pre) {
 			middleware.pre(data);
 		}
 
+		this.routes.push(path);
+		
 		for (var i in middleware.routes) {
 			var route = middleware.routes[i];
+			var endpoint = path + route.path;
 			if (route.method == 'GET') {
-				this.router.get(path + route.path, route.handler.bind(data));
+				this.router.get(endpoint, route.handler.bind(data));
 			} else if (route.method == 'POST') {
-				this.router.post(path + route.path, route.handler.bind(data));
+				this.router.post(endpoing, route.handler.bind(data));
 			}
 		}
 	}
 	this.router.get('/', function(req, res) {
-		res.json(me);
-	});
+		res.json({ me: me, routes: this.routes });
+	}.bind(this));
 
-	var middleware = settings.use;
-	for (var index in middleware) {
-		var integration = middleware[index];
-		this.use(integration.path, require("../middleware/" + integration.module));
-		console.log("Using module: " + integration.module + " on " + integration.path);
+	for (var module in modules) {
+		var settings = modules[module];
+		this.use(settings.path, require("../middleware/" + module));
+		console.log("Using module: " + module + " on " + settings.path);
 	}
 };
 
-module.exports = new Me(me, settings);
+module.exports = new Me(me, modules);
