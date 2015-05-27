@@ -1,5 +1,7 @@
 # api-me
-Open source personal API with custom integrations
+API Me is an open source, personal API that allows for extensible and flexible integrations. 
+
+This is a central repository for your entire online profile. You get to host the content how you want - what endpoints you want exposed and what data you want accessible. If you're building a personal website, connect to your API and pull any data you want streamed to your website. API Me essentially detaches your public information from the social networking accounts they are tied to and aggregates them in a programmable, queriable fashion. Give and get access to your health, location, statuses, photos, blog posts, etc with full access-control over your content. 
 
 ## Data Representation
 
