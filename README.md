@@ -7,31 +7,70 @@ This is a central repository for your entire online profile. You get to host the
 
 me.json
 ```json
-{
-    "name": "Daniel Fang",
-    "bio": "Student @ UW CSE & Software Engineering Intern @ Wealthfront",
-    "blog": {
-        "medium": "@danfang"
+{"me": {
+    "name":"Daniel Fang",
+    "bio":"About me",
+    "contact": {
+        "facebook":
+        ...
     },
-    "code": {
-        "github": "danfang"
-    },
-    "social": {
-        "twitter": "thedanfang"
-    }
+    "work": [...],
+    "projects": [...]
 }
 ```
 
-settings.json
+modules.json
 ```json
 {
-    "twitter": {
-        "consumer_key": "",
-        "consumer_secret": "",
-        "access_token": "",
-        "access_token_secret": ""
-    }
+	"medium": {
+		"path": "/blog",
+		"data": {
+			"me": ""
+		}
+	}, 
+	"twitter": {
+		"path": "/twitter",
+		"data": {
+			"me": "",
+			"secrets": {
+				"consumer_key": "",
+				"consumer_secret": "",
+				"access_token": "",
+				"access_token_secret": ""
+			}
+		}
+	}, 
+	"instagram": {
+		"path": "/photos",
+		"data": {
+			"me": "",
+			"host": "",
+			"secrets": {
+				"client_id": "",
+				"client_secret": "",
+				"access_token": ""
+			}
+		}
+	}, 
+	"foursquare": {
+		"path": "/location",
+		"data": {
+			"host": "",
+			"secrets": {
+				"clientId": "",
+				"clientSecret": ""
+			},
+			"accessToken": ""
+		}
+	}, 
+	"github": {
+		"path": "/code",
+		"data": {
+			"me": ""
+		}
+	}
 }
+
 ```
 
 ## Server
