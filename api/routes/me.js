@@ -16,14 +16,14 @@ var Me = function(me, settings) {
 		}
 
 		this.routes.push(path);
-		
+
 		for (var i in middleware.routes) {
 			var route = middleware.routes[i];
 			var endpoint = path + route.path;
 			if (route.method == 'GET') {
 				this.router.get(endpoint, route.handler.bind(data));
 			} else if (route.method == 'POST') {
-				this.router.post(endpoing, route.handler.bind(data));
+				this.router.post(endpoint, route.handler.bind(data));
 			}
 		}
 	}
