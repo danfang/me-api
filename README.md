@@ -3,7 +3,7 @@
 ## Overview
 Me API is a personal API built on Node.js that allows for extensible integrations. 
 
-Check out an [example](http://api.danielfang.org) personal API. The endpoints are "/blog", "/code", "/location", "/photos", and "/twitter". 
+Check out an [example](http://api.danielfang.org) personal API. The endpoints are "/blog", "/code", "/location", "/photos", "/twitter", and "/btc". 
 
 Check out a [basic client](http://code.danielfang.org:4000/#/) for this API.
 
@@ -177,6 +177,26 @@ For this configuration, I am hosting the Foursquare module at "http://api.foo.co
 3. Once you've set up your app, copy the "Client id" and "Client secret" from your app into modules.json in the appropriate "foursquare" module.
 4. Once this is complete, visit "http://api.foo.com/location/login" to authorize usage of your newly created Foursquare app. 
 5. Copy the newly returned access token into modules.json to finish integrating Foursquare.
+
+### Coinbase
+
+1. Go to your Coinbase Account Settings and generate an API Key+Secret pair
+2. Allow "transactions" and "addresses" in the key settings.
+3. Fill out modules.json
+```json
+"coinbase": {
+    "path": "/btc",
+    "data": {
+        "secrets": {
+            "apiKey": "aaa",
+            "apiSecret": "bbb"
+        },
+        "account": "My Wallet",
+        "txnLimit": 5,
+        "addrLimit": 5
+    }
+}
+```
 
 Not Completed/Potential Integrations
 - Runkeeper
