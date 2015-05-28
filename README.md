@@ -55,7 +55,11 @@ Simple modules.json
 
 ```bash
 (sudo) npm install me-api-server -g
-me-api-server [port]
+
+me-api-init ; Runs a Python script to help create me.json and modules.json
+...
+
+me-api-server [port] ; Run the API server on port [port]
 ```
 
 This will run the API on given port. Using the modules.json (in the directory you're running the server from) in the example above, you will get:
