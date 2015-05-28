@@ -8,7 +8,7 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: {
-          'public/stylesheets/style.css': 'public/stylesheets/style.scss',
+          'lib/public/stylesheets/style.css': 'lib/public/stylesheets/style.scss',
         }
       }
     },
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['public/stylesheets/style.scss'],
+      files: ['lib/public/stylesheets/style.scss'],
       tasks: ['sass']
     }
   });

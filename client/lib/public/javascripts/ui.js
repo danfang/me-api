@@ -9,7 +9,7 @@ var RouteHandler = Router.RouteHandler;
 var App = React.createClass({
   render: function () {
     return (
-      <div className="container">
+      <div className>
         <header id="nav">
           <ul>
             <li><Link to="home">Home</Link></li>
@@ -23,7 +23,7 @@ var App = React.createClass({
         </div>
 
         <footer>
-        	<p>Made with Me API &amp; React &amp; Sass</p>
+        	<p>Made with <a href="https://github.com/danfang/me-api">Me API</a>, React, and Sass</p>
         </footer>
       </div>
     );
@@ -32,7 +32,7 @@ var App = React.createClass({
 
 var Home = React.createClass({
 	getInitialState: function() {
-		return { me: null, tweets: [], checkins: [] };
+		return { me: null, tweets: [], checkins: [], btc: null };
 	},
 	componentDidMount: function() {
 		$.get(API_URL, function(data) {
@@ -49,23 +49,32 @@ var Home = React.createClass({
 			console.log(data);
 			this.setState({ checkins: data.checkins.items });
 		}.bind(this));
+
+		$.get(API_URL + "btc", function(data) {
+			console.log(data);
+			this.setState({ btc: data });
+		}.bind(this));
 	},
 	render: function() { 
 		var me = this.state.me;
 		if (!me) return <div></div>;
 		var checkinNode = this.state.checkins.length ? <Checkin checkin={this.state.checkins[0]} /> : "";
 		var tweetNode = this.state.tweets.length ? <Tweet tweet={this.state.tweets[0]} /> : "";
+		var txnNode = this.state.btc ? <BtcTransaction txn={this.state.btc.txns[0]} /> : "";
+		var addressNode = this.state.btc ? <BtcAddress addrs={this.state.btc.addrs} /> : "";
 		return (
 			<div id="home">
 				<div className="overview">
 					<h2>{me.name}</h2>
 					<p>{me.bio}</p>
 				</div>
-				<div id="latest-checkin">
+				<div id="status" className="row">
 					{checkinNode}
-				</div>
-				<div id="latest-tweet">
 					{tweetNode}
+					{txnNode}
+				</div>
+				<div className="pay">
+					{addressNode}
 				</div>
 			</div>
 		);
@@ -76,13 +85,13 @@ var Checkin = React.createClass({
 	render: function() {
 		var checkin = this.props.checkin;
 		return (
-			<div className="checkin media">
+			<div className="checkin media col-md-4" id="latest-checkin">
 				<div className="media-left">
 					<i className="fa fa-2x fa-map-marker"></i>
 				</div>
 				<div className="media-body">
-					<p className="location">{checkin.venue.name}</p>
-					<p className="shout">{checkin.shout}</p>
+					<p className="location title">{checkin.venue.name}</p>
+					<p className="description">{checkin.shout}</p>
 					<p className="date">{moment(checkin.createdAt * 1000).fromNow()}</p>
 				</div>
 			</div>
@@ -94,15 +103,52 @@ var Tweet = React.createClass({
 	render: function() {
 		var tweet = this.props.tweet;
 		return (
-			<div className="tweet media">
+			<div className="tweet media col-md-4" id="latest-tweet">
 				<div className="media-left">
 					<i className="fa fa-2x fa-twitter"></i>
 				</div>
 				<div className="media-body">
-					<p className="screenName">@{tweet.user.screen_name}</p>
-					<p className="text">{tweet.text}</p>
+					<p className="screenName title">@{tweet.user.screen_name}</p>
+					<p className="description">{tweet.text}</p>
 					<p className="date">{moment(tweet.created_at).fromNow()}</p>
 				</div>
+			</div>
+		);
+	}
+})
+
+
+var BtcTransaction = React.createClass({
+	render: function() {
+		var txn = this.props.txn;
+		var amount = Number(txn.amount.amount);
+		var recipient = txn.recipient ? txn.recipient.name : txn.recipient_address.splice(5);
+		return (
+			<div className="btc-txn media col-md-4" id="latest-txn">
+				<div className="media-left">
+					<i className="fa fa-2x fa-money"></i>
+				</div>
+				<div className="media-body">
+					<p className="title">
+						{amount < 0 ? "Sent ": "Received "}
+						{Math.abs(amount)} {txn.amount.currency} {amount < 0 ? "to ": "from "} {recipient}
+					</p>
+					<p className="description">{txn.notes}</p>
+					<p className="date">{moment(txn.created_at).fromNow()}</p>
+				</div>
+			</div>
+		);
+	}
+});
+
+var BtcAddress = React.createClass({
+	render: function() {
+		var addrs = this.props.addrs;
+		var addr = addrs[Math.floor(Math.random()*addrs.length)];
+		return (
+			<div className="btc-addr" id="btc-addr">
+				<i className="fa fa-btc"></i>
+				<span className="addr">{addr.address.address}</span>
 			</div>
 		);
 	}
@@ -132,6 +178,7 @@ var Blog = React.createClass({
 		});
 		return (
 			<div id="blog">
+				<h1>Blog Example (credit <a href="https://medium.com/@amyngyn">@amyngyn</a>)</h1>
 				{postNodes}
 			</div>
 		);
@@ -185,6 +232,7 @@ var Code = React.createClass({
 			if (event.type == 'CreateEvent') return <CreateEvent event={event} />;
 			if (event.type == 'PushEvent') return <PushEvent event={event} />;
 			if (event.type == 'PublicEvent') return <PublicEvent event={event} />;
+			if (event.type == 'IssuesEvent') return <IssuesEvent event={event} />;
 		})
 		return <div id="code">{eventNodes}</div>
 	}}
@@ -234,7 +282,7 @@ var PushEvent = React.createClass({
 					Pushed {event.payload.commits.length} commit{event.payload.commits.length == 1 ? "" : "s"} to
 					<a href={"https://github.com/" + repo.name}> {repo.name}</a>
 				</p>
-				<p className="commit">Branch {event.payload.ref} at {event.payload.head}</p>
+				<p className="commit">&quot;{event.payload.commits[0].message}&quot; on {event.payload.ref}</p>
 				<p className="date">{moment(event.created_at).fromNow()}</p>
 			</div>
 		);
@@ -251,6 +299,25 @@ var PublicEvent = React.createClass({
 					<i className="fa fa-code fa-lg"></i>
 					Open sourced <a href={"https://github.com/" + repo.name}> {repo.name}</a>
 				</p>
+				<p className="date">{moment(event.created_at).fromNow()}</p>
+			</div>
+		);
+	}
+});
+
+var IssuesEvent = React.createClass({
+	render: function() {
+		var event = this.props.event;
+		var action = event.payload.action;
+		action = action.charAt(0).toUpperCase() + action.slice(1);;
+		var repo = event.repo;
+		return (
+			<div className="github-event">
+				<p className="title">
+					<i className="fa fa-code fa-lg"></i>
+					{action} <a href={event.payload.issue.html_url}>issue</a> in <a href={"https://github.com/" + repo.name}> {repo.name}</a>
+				</p>
+				<p className="description">{event.payload.issue.title}</p>
 				<p className="date">{moment(event.created_at).fromNow()}</p>
 			</div>
 		);
