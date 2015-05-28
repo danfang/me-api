@@ -1,0 +1,83 @@
+#!/usr/bin/env python
+
+import json
+
+def process_reqs(reqs):
+	data = {}
+	for req in reqs:
+		if isinstance(reqs[req], str):
+			data[req] = raw_input(reqs[req] + ': ')
+		else:
+			data[req] = process_reqs(reqs[req])
+	return data
+
+if __name__ == '__main__':
+	available_modules = {
+		'medium' : { 'me': 'Enter your Medium username (with @)' },
+		'github' : { 'me': 'Enter your Github username (wihout @)' },
+		'twitter': { 
+			'me': 'Enter your Twitter username (without @): ', 
+			'secrets': {
+				'consumer_key': 'Enter your Twitter App Consumer Key',
+				'consumer_secret':'Enter your Twitter App Consumer Secret',
+				'access_token': 'Enter your Twitter App Access Token',
+				'access_token_secret': 'Enter your Twitter App Access Token Secret'
+			}
+		},
+		'instagram': {
+			"me": "Enter your Instagram username",
+			"secrets": {
+				"client_id": "Enter your Instagram App Client Id",
+				"client_secret": "Enter your Instagram App Client Secret",
+				"access_token": "Enter your Instagram App Access Token"
+			}
+		}, 
+		"foursquare": {
+			"secrets": {
+				"clientId": "Enter your Foursquare App Client Id",
+				"clientSecret": "Enter your Foursquare App Client Secret"
+			},
+			"accessToken": "Enter your Foursquare App Access Token"
+		}
+	}
+
+	print 'Setting up me.json file\n'
+	name = raw_input('Your full name: ')
+	if name:
+		me = file('me.json', 'w')
+		me.write(json.dumps({ 'name': name }, indent=4, separators=(',', ': ')))
+		me.close()
+		print ('Successfully created me.json!')
+	else:
+		print ('No name entered - not creating me.json')
+
+	print '\nSetting up modules.json file\n'
+	modules_obj = {
+		'settings': {},
+		'modules': {}
+	}
+
+	host_input = raw_input('Enter your API host name [localhost:3000]: ')
+	if not host_input:
+		modules_obj['settings']['host'] = 'localhost:3000'
+	else:
+		modules_obj['settings']['host'] = host_input
+
+	print 'Please choose your desired modules [' + ' '.join(available_modules.keys()) + ']'
+	modules_input = raw_input('Enter modules (separate with spaces): ')
+
+	if not modules_input:
+		modules_input = ' '.join(available_modules.keys())
+
+	for name in modules_input.split(' '):
+		if name not in available_modules:
+			print 'Not a valid module: ' + name
+		else:
+			modules_obj['modules'][name] = { 'path': None, 'data': {}}
+			modules_obj['modules'][name]['path'] = raw_input('Enter an API endpoint for ' + name + ': ')
+			modules_obj['modules'][name]['data'] = process_reqs(available_modules[name])
+			
+
+	print ('Successfully created modules.json!')
+	modules_file = file('modules.json', 'w')
+	modules_file.write(json.dumps(modules_obj, indent=4, separators=(',', ': ')))

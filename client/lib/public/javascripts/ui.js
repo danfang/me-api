@@ -184,6 +184,7 @@ var Code = React.createClass({
 			if (event.type == 'WatchEvent') return <WatchEvent event={event} />;
 			if (event.type == 'CreateEvent') return <CreateEvent event={event} />;
 			if (event.type == 'PushEvent') return <PushEvent event={event} />;
+			if (event.type == 'PublicEvent') return <PublicEvent event={event} />;
 		})
 		return <div id="code">{eventNodes}</div>
 	}}
@@ -239,6 +240,23 @@ var PushEvent = React.createClass({
 		);
 	}
 });
+
+var PublicEvent = React.createClass({
+	render: function() {
+		var event = this.props.event;
+		var repo = event.repo;
+		return (
+			<div className="github-event">
+				<p className="title">
+					<i className="fa fa-code fa-lg"></i>
+					Open sourced <a href={"https://github.com/" + repo.name}> {repo.name}</a>
+				</p>
+				<p className="date">{moment(event.created_at).fromNow()}</p>
+			</div>
+		);
+	}
+});
+
 
 var routes = (
   <Route name="app" path="/" handler={App}>
