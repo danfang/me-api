@@ -2,6 +2,8 @@ var coinbase = require('coinbase');
 var cache = require('memory-cache');
 var handleError = require('../util/util').handleError;
 
+var DEFAULT_CACHE_MSEC = 1000 * 60 * 60; // 1 hour
+
 var getTransactions = function(account, limit, callback) {
 	account.getTransactions(null, limit, function(err, txns) {
 		if (err) return callback(err, txns);
@@ -52,7 +54,7 @@ var Coinbase = {
 							if (err) return handleError(err, res);
 							var data = { txns: txns, addrs: addrs.addresses }
 							console.log('cache miss');
-							cache.put('coinbase', data, 1000 * 60 * 10);
+							cache.put('coinbase', data, DEFAULT_CACHE_MSEC);
 							res.json(data);
 						})
 					});

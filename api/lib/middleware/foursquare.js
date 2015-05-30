@@ -2,6 +2,8 @@ var foursquare = require('node-foursquare');
 var cache = require('memory-cache');
 var handleError = require('../util/util').handleError;
 
+var DEFAULT_CACHE_MSEC = 1000 * 60 * 10; // 10 mins
+
 var getFoursquare = function(req, data) {
 	var settings = { secrets: data.secrets }; 
 	var redirectUrl = req.protocol + '://' + data.host + req.originalUrl + "/redirect";
@@ -26,7 +28,7 @@ var Foursquare = {
 				var fs = getFoursquare(req, this);
 				fs.Users.getCheckins('self', {}, accessToken, function(err, checkins) {
 					if (err) return handleError(err, res);
-					cache.put('foursquare', checkins, 1000 * 60);
+					cache.put('foursquare', checkins, DEFAULT_CACHE_MSEC);
 					console.log('cache miss');
 					res.json(checkins);
 				});

@@ -5,13 +5,19 @@ var router = express.Router();
 var me = JSON.parse(fs.readFileSync('me.json', 'utf8'));
 var modules = JSON.parse(fs.readFileSync('modules.json', 'utf8'));
 
+// This is the extensibility portion of Me API, where you can bind a list of
+// modules from modules.json and me.json to any given endpoint.
 var Me = function(me, modules) {
 	this.router = express.Router();
 	this.routes = [];
+
+	// Function that reads data from modules.json, mounts it on a specified path,
+	// and binds given data to that request.
 	this.use = function(path, middleware) {
 		var data = modules.modules[middleware.source].data;
 		data.host = modules.settings.host;
 
+		// Preprocesses data if there is a given pre() function in the module.
 		if (middleware.pre) {
 			middleware.pre(data);
 		}
@@ -21,6 +27,8 @@ var Me = function(me, modules) {
 		for (var i in middleware.routes) {
 			var route = middleware.routes[i];
 			var endpoint = path + route.path;
+
+			// Mount the middleware handler on a given path
 			if (route.method == 'GET') {
 				this.router.get(endpoint, route.handler.bind(data));
 			} else if (route.method == 'POST') {
@@ -28,14 +36,22 @@ var Me = function(me, modules) {
 			}
 		}
 	}
+
+	// This is the default "/" route that mounts me.json and displays available
+	// API routes.
 	this.router.get('/', function(req, res) {
 		res.json({ me: me, routes: this.routes });
 	}.bind(this));
 
 	for (var module in modules.modules) {
 		var settings = modules.modules[module];
-		this.use(settings.path, require("../middleware/" + module));
-		console.log("Using module: " + module + " on " + settings.path);
+		if (settings.custom) {
+			this.use(settings.path, require(module));
+			console.log("Using custom module: " + module + " on " + settings.path);
+		} else {
+			this.use(settings.path, require("../middleware/" + module));
+			console.log("Using standard module: " + module + " on " + settings.path);
+		}
 	}
 };
 

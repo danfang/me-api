@@ -2,6 +2,8 @@ var ig = require('instagram-node').instagram();
 var cache = require('memory-cache');
 var handleError = require('../util/util').handleError;
 
+var DEFAULT_CACHE_MSEC = 1000 * 60 * 5; // 5 mins
+
 var Instagram = {
 	source: "instagram",
 	routes: [
@@ -19,7 +21,7 @@ var Instagram = {
 				ig.user_self_feed(function(err, media, pag) {
 					if (err) return handleError(err, res);
 					var data = { photos: media };
-					cache.put('instagram', data, 1000 * 30);
+					cache.put('instagram', data, DEFAULT_CACHE_MSEC);
 					console.log('cache miss');
 					res.json(data);
 				});

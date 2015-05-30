@@ -2,6 +2,8 @@ var Twit = require('twit');
 var cache = require('memory-cache');
 var handleError = require('../util/util');
 
+var DEFAULT_CACHE_MSEC = 1000 * 60; // 60 seconds
+
 var Twitter = {
 	source: "twitter",
 	routes: [
@@ -15,7 +17,7 @@ var Twitter = {
 				this.Twitter.get('/statuses/user_timeline', { screen_name: this.me }, function(err, data, response) {
 					if (err) return handleError(err, res);
 					var data = { tweets: data };
-					cache.put('twitter', data, 1000 * 30);
+					cache.put('twitter', data, DEFAULT_CACHE_MSEC);
 					console.log('cache miss');
 					res.json(data);
 				});

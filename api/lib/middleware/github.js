@@ -2,6 +2,8 @@ var request = require('request');
 var handleError = require('../util/util');
 var cache = require('memory-cache');
 
+var DEFAULT_CACHE_MSEC = 1000 * 60 * 5; // 5 mins
+
 var Github = {
 	source: "github",
 	routes: [
@@ -16,7 +18,7 @@ var Github = {
 				request({ url: url, headers: { 'User-Agent': this.me }}, function(err, response, body) {
 					if (err || response.statusCode != 200) return handleError(err, res);
 					var data = JSON.parse(body);
-					cache.put('github', data, 1000 * 60 * 2);
+					cache.put('github', data, DEFAULT_CACHE_MSEC);
 					console.log('cache miss');
 					return res.json(data);
 				});
