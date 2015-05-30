@@ -4,7 +4,7 @@ Me API is a __personal API__ built on Node.js that allows for __extensible integ
 
 Check out an [example](http://api.danielfang.org) personal API. The endpoints are [/blog](http://api.danielfang.org/blog), [/code](http://api.danielfang.org/code), [/location](http://api.danielfang.org/location), [/photos](http://api.danielfang.org/photos), [/twitter](http://api.danielfang.org/twitter), and [/btc](http://api.danielfang.org/btc). 
 
-Check out a [basic client](http://code.danielfang.org:4000/#/) for this API.
+Check out a [basic client](http://danielfang.org) for this API.
 
 This is a central repository for your entire online profile. You get to host the content how you want - what endpoints you want exposed and what data you want accessible. 
 
