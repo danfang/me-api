@@ -18,7 +18,7 @@ var Instagram = {
 				if (!accessToken) return handleError("You have not specified an access Token yet", res);
 
 				ig.use(this.secrets);
-				ig.user_self_feed(function(err, media, pag) {
+				ig.user_self_media_recent(function(err, media, pag) {
 					if (err) return handleError(err, res);
 					var data = { photos: media };
 					cache.put('instagram', data, DEFAULT_CACHE_MSEC);
