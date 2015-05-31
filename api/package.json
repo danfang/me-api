@@ -1,13 +1,15 @@
 {
   "name": "me-api-server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "lib/app.js",
+  "description": "A personal API with custom integrations",
   "bin": {
     "me-api-server": "./bin/www",
     "me-api-init": "./bin/init"
   },
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "mocha"
   },
   "dependencies": {
     "coinbase": "^1.0.2",
@@ -25,5 +27,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/danfang/api-me.git"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.5",
+    "supertest": "^1.0.1"
   }
 }
