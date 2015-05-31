@@ -30,5 +30,8 @@ node_modules
 # Config json files
 me.json
 modules.json
+api/me.js
+api/modules.js
 
+# Sass extras
 .sass-cache

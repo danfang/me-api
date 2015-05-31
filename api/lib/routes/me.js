@@ -1,9 +1,12 @@
 var fs = require('fs');
+var path = require('path');
 var express = require('express');
 var router = express.Router();
 
-var me = JSON.parse(fs.readFileSync('me.json', 'utf8'));
-var modules = JSON.parse(fs.readFileSync('modules.json', 'utf8'));
+var cwd = process.cwd();
+
+var me = require(path.join(cwd, './me'));
+var modules = require(path.join(cwd, './modules'));
 
 // This is the extensibility portion of Me API, where you can bind a list of
 // modules from modules.json and me.json to any given endpoint.
@@ -35,10 +38,7 @@ var Me = function(me, modules) {
 				this.router.post(endpoint, route.handler.bind(data));
 			}
 		}
-	}
-
-	// This is the default "/" route that mounts me.json and displays available
-	// API routes.
+	};
 	this.router.get('/', function(req, res) {
 		res.json({ me: me, routes: this.routes });
 	}.bind(this));
