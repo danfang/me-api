@@ -1,10 +1,13 @@
+var path = require('path');
 var assert = require('assert');
 var request = require('supertest');
 var should = require('chai').should();
 
 var app = require('../lib/app.js') ;
-var me = require('../me.json');
-var modules = require('../modules.json');
+
+var cwd = process.cwd();
+var me = require(path.join(cwd, './me'));
+var modules = require(path.join(cwd, './modules'));
 
 describe('GET /', function() {
     it('Responds with me.json', function(done) {
