@@ -14,7 +14,7 @@ def process_reqs(reqs):
 if __name__ == '__main__':
 	available_modules = {
 		'medium' : { 'me': 'Enter your Medium username (with @)' },
-		'github' : { 'me': 'Enter your Github username (wihout @)' },
+		'github' : { 'me': 'Enter your Github username (without @)' },
 		'twitter': { 
 			'me': 'Enter your Twitter username (without @): ', 
 			'secrets': {
