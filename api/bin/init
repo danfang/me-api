@@ -74,7 +74,7 @@ if __name__ == '__main__':
 			print 'Not a valid module: ' + name
 		else:
 			modules_obj['modules'][name] = { 'path': None, 'data': {}}
-			modules_obj['modules'][name]['path'] = raw_input('Enter an API endpoint for ' + name + ': ')
+			modules_obj['modules'][name]['path'] = raw_input('Enter an API endpoint for ' + name + ' (with leading /): ')
 			modules_obj['modules'][name]['data'] = process_reqs(available_modules[name])
 			
 
