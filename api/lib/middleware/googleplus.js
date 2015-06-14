@@ -31,15 +31,17 @@ var GooglePlus = {
                 method: "GET",
                 path: "/posts",
                 handler: function(req, res) {
-                    var cachedResult = cache.get('googleplus_posts');
+                    var pageToken = req.query.pageToken || '';
+                    var cacheKey = 'googleplus_posts_' + pageToken;
+                    var cachedResult = cache.get(cacheKey);
                     if (cachedResult) return res.json(cachedResult);
 
                     if (!this.apikey) return handleError("You have to specify an API-Key", res);
 
-                    gplus.activities.list({ key: this.apikey, userId: this.me, collection: 'public' }, function(err, posts) {
+                    gplus.activities.list({ key: this.apikey, userId: this.me, collection: 'public', pageToken: pageToken }, function(err, posts) {
                         if (err) return handleError(err, res);
                         var data = posts;
-                        cache.put('googleplus_posts', data, DEFAULT_CACHE_MSEC);
+                        cache.put(cacheKey, data, DEFAULT_CACHE_MSEC);
                         console.log('cache miss');
                         res.json(data);
                     });
