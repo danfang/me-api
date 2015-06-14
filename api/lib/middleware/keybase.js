@@ -28,7 +28,7 @@ var Keybase = {
             method: "GET",
             path: "/key.asc",
             handler: function(req, res) {
-                var cachedResult = cache.get('keybase');
+                var cachedResult = cache.get('keybase_key');
                 if (cachedResult) {
                     return res.send(cachedResult);
                 }
@@ -36,7 +36,7 @@ var Keybase = {
                 var url = 'https://keybase.io/' + this.me + '/key.asc';
                 request({ url: url, headers: { 'User-Agent': this.me }}, function(err, response, body) {
                     if (err || response.statusCode != 200) return handleError(err, res);
-                    cache.put('keybase', body, DEFAULT_CACHE_MSEC);
+                    cache.put('keybase_key', body, DEFAULT_CACHE_MSEC);
                     console.log('cache miss');
                     return res.send(body);
                 });
