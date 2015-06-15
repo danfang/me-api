@@ -20,7 +20,8 @@
     "morgan": "~1.5.3",
     "node-foursquare": "^0.3.0",
     "request": "^2.55.0",
-    "twit": "^1.1.20"
+    "twit": "^1.1.20",
+    "googleapis":"^2.0.5"
   },
   "author": "Daniel Fang <danfang@uw.edu>",
   "license": "MIT",

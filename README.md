@@ -195,6 +195,32 @@ For this configuration, I am hosting the Foursquare module at "http://api.foo.co
 }
 ```
 
+### Keybase
+
+1. Enter in your keybase username as the "me" field in modules.json
+```json
+"keybase": {
+    "path": "/encrypt",
+    "data": {
+        "me": "username"
+    }
+}                         
+```
+
+### Google+
+
+1. Enter in your Google+ canonical name (if exists) or user-id as the "me" field in modules.json
+```json
+"googleplus": {
+    "path": "/social",
+    "data": {
+        "apikey": "Your API-Key",
+        "me": "+username"
+    }
+}                         
+```
+
+
 Not Completed/Potential Integrations
 - Runkeeper
 - Venmo
