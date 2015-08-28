@@ -20,7 +20,7 @@ var Nest = {
 				request({ url: url, headers: { 'Accept': 'application/json' }}, function(err, response, body) {
 					if (err || response.statusCode != 200) return handleError(err, res);
 					var data = JSON.parse(body);
-					cache.put('github', data, DEFAULT_CACHE_MSEC);
+					cache.put('nest', data, DEFAULT_CACHE_MSEC);
 					console.log('cache miss');
 					return res.json(data);
 				});
