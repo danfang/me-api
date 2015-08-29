@@ -1,0 +1,38 @@
+{
+  "name": "me-api-server",
+  "version": "1.0.4",
+  "main": "lib/app.js",
+  "description": "A personal API with custom integrations",
+  "bin": {
+    "me-api-server": "./bin/www",
+    "me-api-init": "./bin/init"
+  },
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "coinbase": "^1.0.2",
+    "debug": "~2.2.0",
+    "express": "~4.12.4",
+    "instagram-node": "^0.5.7",
+    "memory-cache": "^0.1.2",
+    "morgan": "~1.5.3",
+    "node-foursquare": "^0.3.0",
+    "request": "^2.55.0",
+    "twit": "^1.1.20",
+    "googleapis": "^2.0.5"
+  },
+  "author": "Daniel Fang <danfang@uw.edu>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danfang/api-me.git"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.5",
+    "proxyquire": "^1.7.1",
+    "supertest": "^1.0.1"
+  }
+}

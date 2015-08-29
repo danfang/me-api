@@ -28,7 +28,9 @@ build/Release
 node_modules
 
 # Config json files
-api/*.json
+api/me.json
+api/modules.json
+api/config.json
 api/me.js
 api/modules.js
 api/config.js
