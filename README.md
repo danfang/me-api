@@ -1,5 +1,7 @@
 # Me API
 
+[![Build Status](https://travis-ci.org/danfang/me-api.svg?branch=master)](https://travis-ci.org/danfang/me-api)
+
 Me API is a __personal API__ built on Node.js that allows for __extensible integrations__. 
 
 Check out an [example](http://api.danielfang.org) personal API. The endpoints are [/blog](http://api.danielfang.org/blog), [/code](http://api.danielfang.org/code), [/location](http://api.danielfang.org/location), [/photos](http://api.danielfang.org/photos), [/twitter](http://api.danielfang.org/twitter), and [/btc](http://api.danielfang.org/btc). 
