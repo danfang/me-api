@@ -1,7 +1,11 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-var MeRouter = require('./routes/router');
+
+var me = require('../me');
+var config = require('../config');
+var Router = require('./routes/router');
+
 var app = express();
 
 app.set('json spaces', 4);
@@ -16,7 +20,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/', MeRouter.router);
+app.use('/', (new Router(me, config.modules, config.settings)).router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

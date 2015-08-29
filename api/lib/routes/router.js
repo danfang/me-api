@@ -2,15 +2,10 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var router = express.Router();
-var cwd = process.cwd();
-var config = require(path.join(cwd, './config'));
-var me = require(path.join(cwd, './me'));
-
-module.exports = new MeRouter(me, config.modules, config.settings);
 
 // This is the extensibility portion of Me API, where you can bind a list of
 // modules from modules.json and me.json to any given endpoint.
-function MeRouter(me, modules, settings) {
+module.exports = function(me, modules, settings) {
 	this.router = express.Router();
     this.modules = modules;
     this.settings = settings;
