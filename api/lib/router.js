@@ -39,7 +39,7 @@ module.exports = function(me, modules, settings) {
         this.useModule(settings.path, require(moduleName));
         console.log('Using custom module: ' + moduleName + ' on ' + settings.path);
       } else {
-        this.useModule(settings.path, require('../middleware/' + moduleName));
+        this.useModule(settings.path, require('./middleware/' + moduleName));
         console.log('Using standard module: ' + moduleName + ' on ' + settings.path);
       }
     }
