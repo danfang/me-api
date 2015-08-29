@@ -1,16 +1,30 @@
 var path = require('path');
 var assert = require('assert');
 var request = require('supertest');
+var mock = require('proxyquire');
 var should = require('chai').should();
+var cwd = process.cwd();
+
+var me = { name: 'Test User' };
+var config = { 
+    settings: { host: 'localhost' },
+    modules: {
+        medium: {
+            path: '/path',
+            data: { me: 'user' }
+        }
+    }
+};
+
+var stubs = {};
+stubs[path.join(cwd, './me')] = me;
+stubs[path.join(cwd, './config')] = config;
+mock('../lib/routes/router', stubs);
 
 var app = require('../lib/app.js') ;
 
-var cwd = process.cwd();
-var me = require(path.join(cwd, './me'));
-var modules = require(path.join(cwd, './modules'));
-
 describe('GET /', function() {
-    it('Responds with me.json', function(done) {
+    it('Responds with values of ./me', function(done) {
         request(app)
             .get('/')
             .set('Accept', 'application/json')
@@ -22,10 +36,10 @@ describe('GET /', function() {
             })
             .end(done);
     });
-    it('Has routes specified in modules.json', function(done) {
+    it('Has routes specified in ./modules', function(done) {
         var routes = [];
-        for (var moduleName in modules.modules) {
-            var module = modules.modules[moduleName];
+        for (moduleName in config.modules) {
+            var module = config.modules[moduleName];
             routes.push(module.path);
         }
         request(app)
@@ -40,4 +54,3 @@ describe('GET /', function() {
             .end(done);
     });
 });
-

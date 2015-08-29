@@ -1,15 +1,12 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-
-var Me = require('./routes/me');
-
+var MeRouter = require('./routes/router');
 var app = express();
+
+app.set('json spaces', 4);
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Pretty print JSON
-app.set('json spaces', 4);
 
 // Allow Ajax GET calls
 app.use(function (req, res, next) {
@@ -19,7 +16,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/', Me.router);
+app.use('/', MeRouter.router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
