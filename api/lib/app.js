@@ -1,11 +1,9 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-
 var me = require('../me');
 var config = require('../config');
 var Router = require('./routes/router');
-
 var app = express();
 
 app.set('json spaces', 4);
