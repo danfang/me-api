@@ -56,17 +56,17 @@ if __name__ == '__main__':
 	else:
 		print ('No name entered - not creating me.json')
 
-	print '\nSetting up modules.json file\n'
-	modules_obj = {
+	print '\nSetting up config.json file\n'
+	config_obj = {
 		'settings': {},
 		'modules': {}
 	}
 
 	host_input = raw_input('Enter your API host name [localhost:3000]: ')
 	if not host_input:
-		modules_obj['settings']['host'] = 'localhost:3000'
+		config_obj['settings']['host'] = 'localhost:3000'
 	else:
-		modules_obj['settings']['host'] = host_input
+		config_obj['settings']['host'] = host_input
 
 	print 'Please choose your desired modules [' + ' '.join(available_modules.keys()) + ']'
 	modules_input = raw_input('Enter modules (separate with spaces): ')
@@ -78,11 +78,11 @@ if __name__ == '__main__':
 		if name not in available_modules:
 			print 'Not a valid module: ' + name
 		else:
-			modules_obj['modules'][name] = { 'path': None, 'data': {}}
-			modules_obj['modules'][name]['path'] = raw_input('Enter an API endpoint for ' + name + ' (with leading /): ')
-			modules_obj['modules'][name]['data'] = process_reqs(available_modules[name])
+			config_obj['modules'][name] = { 'path': None, 'data': {}}
+			config_obj['modules'][name]['path'] = raw_input('Enter an API endpoint for ' + name + ' (with leading /): ')
+			config_obj['modules'][name]['data'] = process_reqs(available_modules[name])
 			
 
-	print ('Successfully created modules.json!')
-	modules_file = file('modules.json', 'w')
-	modules_file.write(json.dumps(modules_obj, indent=4, separators=(',', ': ')))
+	print ('Successfully created config.json!')
+	config_file = file('config.json', 'w')
+	config_file.write(json.dumps(config_obj, indent=4, separators=(',', ': ')))
