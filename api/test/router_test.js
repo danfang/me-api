@@ -11,7 +11,14 @@ describe('router', function() {
     modules = {};
     settings = { host: 'localhost' };
     me = { name: 'Test User' };
-    mockery.enable({ warnOnUnregistered: false });
+    mockery.enable({
+      warnOnUnregistered: false,
+      warnOnReplace: false
+    });
+  });
+
+  after(function() {
+    mockery.disable()
   });
 
   describe('#constructor', function() {

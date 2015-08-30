@@ -6,7 +6,10 @@ describe('GET /', function() {
   var app;
 
   before(function() {
-    mockery.enable({ warnOnUnregistered: false });
+    mockery.enable({
+      warnOnUnregistered: false,
+      warnOnReplace: false
+    });
     mockery.registerMock('../me', { name: 'Test User' });
     mockery.registerMock('../config', {
       settings: {},
@@ -18,6 +21,10 @@ describe('GET /', function() {
       }
     });
     app = require('../lib/app');
+  });
+
+  after(function() {
+    mockery.disable();
   });
 
   it('Responds with values of ./me', function(done) {
