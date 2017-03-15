@@ -34,7 +34,7 @@ module.exports = (function() {
     }
 
     this.mountModuleRoutes(path, module.routes, data);
-    this.routes.push(path);
+    this.routes.push('/' + path);
     console.log('Using module: ' + name + ' on /' + path);
   };
 
