@@ -4,19 +4,19 @@
 [![NPM version](https://img.shields.io/npm/v/me-api-server.svg?style=flat)](https://www.npmjs.com/package/me-api-server)
 [![Build Status](https://travis-ci.org/danfang/me-api.svg?branch=master)](https://travis-ci.org/danfang/me-api)
 
-Me API is a __personal API__ built on Node.js that allows for __extensible integrations__. 
+Me API is a __personal API__ built on Node.js that allows for __extensible integrations__.
 
-Check out an [example](http://api.danielfang.org) personal API. The endpoints are [/blog](http://api.danielfang.org/blog), [/code](http://api.danielfang.org/code), [/location](http://api.danielfang.org/location), [/photos](http://api.danielfang.org/photos), [/twitter](http://api.danielfang.org/twitter), and [/btc](http://api.danielfang.org/btc). 
+Check out an [example](http://api.danielfang.org) personal API. The endpoints are [/blog](http://api.danielfang.org/blog), [/code](http://api.danielfang.org/code), [/location](http://api.danielfang.org/location), [/photos](http://api.danielfang.org/photos), [/twitter](http://api.danielfang.org/twitter), and [/btc](http://api.danielfang.org/btc).
 
 Check out a [basic client](http://danielfang.org) for this API.
 
-This is a central repository for your entire online profile. You get to host the content how you want - what endpoints you want exposed and what data you want accessible. 
+This is a central repository for your entire online profile. You get to host the content how you want - what endpoints you want exposed and what data you want accessible.
 
-If you're building a personal website, connect to your API and pull any data you want streamed to your website. Me API essentially detaches your public information from the social networking accounts they live on and aggregates them in a programmable fashion. Give and get access to your health, location, statuses, photos, blog posts, [anything] with full access-control over your content. 
+If you're building a personal website, connect to your API and pull any data you want streamed to your website. Me API essentially detaches your public information from the social networking accounts they live on and aggregates them in a programmable fashion. Give and get access to your health, location, statuses, photos, blog posts, [anything] with full access-control over your content.
 
 ## Data Representation
 
-Our API endpoints are set up in two files: me.json, and config.json. 
+Our API endpoints are set up in two files: me.json, and config.json.
 
 me.json (or .js) is an object automatically hosted on the root path "/" and represents any information you want to expose about yourself, independent of any integrations you choose.
 
@@ -55,12 +55,12 @@ Simple config.json
 ## Installing and Running
 
 ```bash
-(sudo) npm install me-api-server -g
+(sudo) npm install -g me-api-server
 
 me-api-init ; Runs a Python script to help create me.json and config.json
 ...
 
-me-api-server [port] ; Run the API server on port [port]
+me-api-server [port] -m <me.json file> -c <config.json file> ; Run the API server on port [port]
 ```
 
 This will run the API on given port. Using the config.json (in the directory you're running the server from) in the example above, you will get:
@@ -69,10 +69,10 @@ This will run the API on given port. Using the config.json (in the directory you
 - /code running the Github module
 
 For a live demo, go to [my API](http://api.danielfang.org) to see more integrations.
- 
+
 ## External Client
 
-In the client/ folder, there is a basic React application that makes AJAX calls to your own API. This Cross-Domain access is allowed by default. 
+In the client/ folder, there is a basic React application that makes AJAX calls to your own API. This Cross-Domain access is allowed by default.
 
 For a live demo, check out this [basic client](http://code.danielfang.org:4000/#/) to see the modules rendered in real time.
 
@@ -87,7 +87,7 @@ For a live demo, check out this [basic client](http://code.danielfang.org:4000/#
 	"data": {
 		"me": "username"
 	}
-}                         
+}
 ```
 
 ### Medium
@@ -110,17 +110,17 @@ For a live demo, check out this [basic client](http://code.danielfang.org:4000/#
 4. Enter in your twitter username (without the @) as "me" in config.json
 
 ```json
-"twitter": {                                                                         
-	"path": "/twitter",                                                              
-	"data": {                                                                        
-		"me": "username",                                                          
-		"secrets": {                                                                 
-			"consumer_key": "aaa",                             
-			"consumer_secret": "bbb", 
-			"access_token": "ccc",    
-			"access_token_secret": "ddd"   
-		}                                                                            
-	}                                                                                
+"twitter": {
+	"path": "/twitter",
+	"data": {
+		"me": "username",
+		"secrets": {
+			"consumer_key": "aaa",
+			"consumer_secret": "bbb",
+			"access_token": "ccc",
+			"access_token_secret": "ddd"
+		}
+	}
 }
 ```
 
@@ -148,8 +148,8 @@ For a live demo, check out this [basic client](http://code.danielfang.org:4000/#
 }
 ```
 For this configuration, I am hosting the Instagram module at "http://api.foo.com/photos". Thus, the redirect URI I should enter for my app is "http://api.foo.com/photos/login/redirect".
-4. After the app is set up, copy the "Client ID" and "Client Secret" into config.json. 
-5. Go to "http://api.foo.com/photos/login" and authorize your newly created app to get the access_token. 
+4. After the app is set up, copy the "Client ID" and "Client Secret" into config.json.
+5. Go to "http://api.foo.com/photos/login" and authorize your newly created app to get the access_token.
 6. Copy this access_token into config.json to finish up your Instagram integration.
 
 ### Swarm by Foursquare
@@ -171,12 +171,12 @@ For this configuration, I am hosting the Instagram module at "http://api.foo.com
 			},
 			"accessToken": "ccc"
 		}
-	}, 
+	},
 }
 ```
 For this configuration, I am hosting the Foursquare module at "http://api.foo.com/location". Thus, the redirect URI I should enter for my app is "http://api.foo.com/location/login/redirect".
 3. Once you've set up your app, copy the "Client id" and "Client secret" from your app into config.json in the appropriate "foursquare" module.
-4. Once this is complete, visit "http://api.foo.com/location/login" to authorize usage of your newly created Foursquare app. 
+4. Once this is complete, visit "http://api.foo.com/location/login" to authorize usage of your newly created Foursquare app.
 5. Copy the newly returned access token into config.json to finish integrating Foursquare.
 
 ### Coinbase
@@ -208,7 +208,7 @@ For this configuration, I am hosting the Foursquare module at "http://api.foo.co
     "data": {
         "me": "username"
     }
-}                         
+}
 ```
 
 ### Google+
@@ -221,7 +221,7 @@ For this configuration, I am hosting the Foursquare module at "http://api.foo.co
         "apikey": "Your API-Key",
         "me": "+username"
     }
-}                         
+}
 ```
 
 
@@ -241,8 +241,8 @@ var handleError = require('../util/util');
 
 var Github = {
 	source: "github", // The name of your module, which will be referenced in config.json
-	
-	// Below are all available routes for this piece of middleware. Notice the root "path" should be "", so that the user 
+
+	// Below are all available routes for this piece of middleware. Notice the root "path" should be "", so that the user
 	// can mount this module on any path in config.json. For example, if the user mounts this module on "/code",
 	// the following route will handle "/code" and an additional route with path "/stats" will handle "/code/stats".
 	routes: [
@@ -254,7 +254,7 @@ var Github = {
 				// Leveraging caches is important to not exceed rate limits on various APIs
 				var cachedResult = cache.get('github');
 				if (cachedResult) return res.json(cachedResult);
-				
+
 				// Referencing "this" accesses the "data" object in config.json. This is how to access
 				// user-specified keys and usernames.
 				var url = 'https://api.github.com/users/' + this.me + "/events/public";
