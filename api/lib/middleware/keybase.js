@@ -1,5 +1,5 @@
 var request = require('request');
-var handleError = require('../util/util');
+var handleError = require('../util/util').handleError;
 var cache = require('memory-cache');
 
 var DEFAULT_CACHE_MSEC = 1000 * 60 * 15; // 15 mins

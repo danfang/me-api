@@ -4,27 +4,39 @@
  * Module dependencies.
  */
 
-var app = require('../lib/app');
+var fs = require('fs');
 var debug = require('debug')('api:server');
 var http = require('http');
+var minimist = require('minimist');
+
+/**
+ * Process command line args
+ */
+var argv = minimist(process.argv.slice(2));
+if (!argv.m || !argv.c) {
+  console.error('Usage: me-api-server [port] -m <me.json> -c <config.json>');
+  process.exit(1);
+}
+
+var me = JSON.parse(fs.readFileSync(argv.m, 'utf8'));
+var config = JSON.parse(fs.readFileSync(argv.c, 'utf8'));
+
+var app = require('../lib/app')(me, config);
 
 /**
  * Get port from environment and store in Express.
  */
-
-var port = normalizePort(process.argv[2] || process.env.PORT ||'3000');
+var port = normalizePort(argv._[0] || process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-
 var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
@@ -32,7 +44,6 @@ server.on('listening', onListening);
 /**
  * Normalize a port into a number, string, or false.
  */
-
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
@@ -52,7 +63,6 @@ function normalizePort(val) {
 /**
  * Event listener for HTTP server "error" event.
  */
-
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
@@ -80,7 +90,6 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'

@@ -1,6 +1,6 @@
 var Twit = require('twit');
 var cache = require('memory-cache');
-var handleError = require('../util/util');
+var handleError = require('../util/util').handleError;
 
 var DEFAULT_CACHE_MSEC = 1000 * 60; // 60 seconds
 

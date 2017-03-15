@@ -65,8 +65,8 @@ describe('router', function() {
       var mountSpy = sinon.spy(ApiRouter.prototype, 'mountModuleRoutes');
       var routes = [{ method: 'GET', path: '', handler: function() {} }];
       mockery.registerMock('./middleware/no-pre', { source: 'module', routes: routes });
-      router.useModule('no-pre', { path: '/path', data: {} });
-      mountSpy.withArgs('/path', routes).calledOnce.should.be.true;
+      router.useModule('no-pre', { path: 'path', data: {} });
+      mountSpy.withArgs('path', routes).calledOnce.should.be.true;
       router.routes.should.deep.equal(['/path']);
       ApiRouter.prototype.mountModuleRoutes.restore();
     });
@@ -78,7 +78,7 @@ describe('router', function() {
       mockery.registerMock('./middleware/with-pre', {
         source: 'module', routes: routes, pre: preSpy
       });
-      router.useModule('with-pre', { path: '/path', data: 'data' });
+      router.useModule('with-pre', { path: 'path', data: 'data' });
       preSpy.withArgs('data').calledOnce.should.be.true;
     });
   });
@@ -92,7 +92,7 @@ describe('router', function() {
         { method: 'GET', path: '/get', handler: function() {} },
         { method: 'POST', path: '/post', handler: function() {} },
       ];
-      router.mountModuleRoutes('/path', routes, 'data');
+      router.mountModuleRoutes('path', routes, 'data');
       getSpy.withArgs('/path/get').calledOnce.should.be.true;
       postSpy.withArgs('/path/post').calledOnce.should.be.true;
       express.Router.get.restore();

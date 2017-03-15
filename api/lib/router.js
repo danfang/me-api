@@ -34,17 +34,17 @@ module.exports = (function() {
     }
 
     this.mountModuleRoutes(path, module.routes, data);
-    this.routes.push(path);
-    console.log('Using module: ' + name + ' on ' + path);
+    this.routes.push('/' + path);
+    console.log('Using module: ' + name + ' on /' + path);
   };
 
   ApiRouter.prototype.mountModuleRoutes = function(path, moduleRoutes, data) {
     moduleRoutes.forEach(function(route) {
       var endpoint = path + route.path;
       if (route.method == 'GET') {
-        this.router.get(endpoint, route.handler.bind(data));
+        this.router.get('/' + endpoint, route.handler.bind(data));
       } else if (route.method == 'POST') {
-        this.router.post(endpoint, route.handler.bind(data));
+        this.router.post('/' + endpoint, route.handler.bind(data));
       }
     }, this);
   };

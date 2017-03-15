@@ -15,8 +15,8 @@ if __name__ == '__main__':
 	available_modules = {
 		'medium' : { 'me': 'Enter your Medium username (with @)' },
 		'github' : { 'me': 'Enter your Github username (without @)' },
-		'twitter': { 
-			'me': 'Enter your Twitter username (without @): ', 
+		'twitter': {
+			'me': 'Enter your Twitter username (without @): ',
 			'secrets': {
 				'consumer_key': 'Enter your Twitter App Consumer Key',
 				'consumer_secret':'Enter your Twitter App Consumer Secret',
@@ -31,7 +31,7 @@ if __name__ == '__main__':
 				"client_secret": "Enter your Instagram App Client Secret",
 				"access_token": "Enter your Instagram App Access Token"
 			}
-		}, 
+		},
 		"foursquare": {
 			"secrets": {
 				"clientId": "Enter your Foursquare App Client Id",
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 			"accessToken": "Enter your Foursquare App Access Token"
 		},
 		"keybase": { "me": "Enter your keybase.io username" },
-                "googleplus": { 
+                "googleplus": {
 			"me": "Enter your Google+ canonical name or your UserID",
 			"apikey": "Enter your Google+ API-Key"
 		}
@@ -79,9 +79,8 @@ if __name__ == '__main__':
 			print 'Not a valid module: ' + name
 		else:
 			config_obj['modules'][name] = { 'path': None, 'data': {}}
-			config_obj['modules'][name]['path'] = raw_input('Enter an API endpoint for ' + name + ' (with leading /): ')
+			config_obj['modules'][name]['path'] = raw_input('Enter an API endpoint for ' + name + ' (no leading /): ')
 			config_obj['modules'][name]['data'] = process_reqs(available_modules[name])
-			
 
 	print ('Successfully created config.json!')
 	config_file = file('config.json', 'w')

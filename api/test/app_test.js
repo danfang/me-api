@@ -2,6 +2,17 @@ var request = require('supertest');
 var mockery = require('mockery');
 var should = require('chai').should();
 
+const me = { name: 'Test User' };
+const config = {
+  settings: {},
+  modules: {
+    github: {
+      path: 'path',
+      data: {}
+    }
+  }
+};
+
 describe('GET /', function() {
   var app;
 
@@ -10,17 +21,7 @@ describe('GET /', function() {
       warnOnUnregistered: false,
       warnOnReplace: false
     });
-    mockery.registerMock('../me', { name: 'Test User' });
-    mockery.registerMock('../config', {
-      settings: {},
-      modules: {
-        github: {
-          path: '/path',
-          data: {}
-        }
-      }
-    });
-    app = require('../lib/app');
+    app = require('../lib/app')(me, config);
   });
 
   after(function() {
