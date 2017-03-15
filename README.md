@@ -74,7 +74,7 @@ For a live demo, go to [my API](http://api.danielfang.org) to see more integrati
 
 In the client/ folder, there is a basic React application that makes AJAX calls to your own API. This Cross-Domain access is allowed by default.
 
-For a live demo, check out this [basic client](http://code.danielfang.org:4000/#/) to see the modules rendered in real time.
+For a live demo, check out this [basic client](http://danielfang.org/) to see the modules rendered in real time.
 
 ## Integration Guides
 
