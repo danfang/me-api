@@ -7,7 +7,7 @@ const config = {
   settings: {},
   modules: {
     github: {
-      path: '/path',
+      path: 'path',
       data: {}
     }
   }
