@@ -83,7 +83,7 @@ For a live demo, check out this [basic client](http://danielfang.org/) to see th
 1. Enter in your github username as the "me" field in config.json
 ```json
 "github": {
-	"path": "/code",
+	"path": "code",
 	"data": {
 		"me": "username"
 	}
@@ -95,7 +95,7 @@ For a live demo, check out this [basic client](http://danielfang.org/) to see th
 1. Enter in your medium username with the @ symbol as the "me" field in config.json
 ```json
 "medium": {
-	"path": "/blog",
+	"path": "blog",
 	"data": {
 		"me": "@username"
 	}
@@ -111,7 +111,7 @@ For a live demo, check out this [basic client](http://danielfang.org/) to see th
 
 ```json
 "twitter": {
-	"path": "/twitter",
+	"path": "twitter",
 	"data": {
 		"me": "username",
 		"secrets": {
@@ -135,7 +135,7 @@ For a live demo, check out this [basic client](http://danielfang.org/) to see th
 "modules": {
 	...
 	"instagram": {
-		"path": "/photos",
+		"path": "photos",
 		"data": {
 			"me": "username",
 			"secrets": {
@@ -148,6 +148,7 @@ For a live demo, check out this [basic client](http://danielfang.org/) to see th
 }
 ```
 For this configuration, I am hosting the Instagram module at "http://api.foo.com/photos". Thus, the redirect URI I should enter for my app is "http://api.foo.com/photos/login/redirect".
+
 4. After the app is set up, copy the "Client ID" and "Client Secret" into config.json.
 5. Go to "http://api.foo.com/photos/login" and authorize your newly created app to get the access_token.
 6. Copy this access_token into config.json to finish up your Instagram integration.
@@ -163,7 +164,7 @@ For this configuration, I am hosting the Instagram module at "http://api.foo.com
 "modules": {
 	...
 	"foursquare": {
-		"path": "/location",
+		"path": "location",
 		"data": {
 			"secrets": {
 				"clientId": "aaa",
@@ -186,7 +187,7 @@ For this configuration, I am hosting the Foursquare module at "http://api.foo.co
 3. Fill out config.json
 ```json
 "coinbase": {
-    "path": "/btc",
+    "path": "btc",
     "data": {
         "secrets": {
             "apiKey": "aaa",
