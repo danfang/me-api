@@ -6,7 +6,7 @@
 
 Me API is a __personal API__ built on Node.js that allows for __extensible integrations__.
 
-Check out an [example](http://api.danielfang.org) personal API. The endpoints are [/blog](http://api.danielfang.org/blog), [/code](http://api.danielfang.org/code), [/location](http://api.danielfang.org/location), [/photos](http://api.danielfang.org/photos), [/twitter](http://api.danielfang.org/twitter), and [/btc](http://api.danielfang.org/btc).
+Check out an [example](http://api.danielfang.org) personal API. The endpoints are [/blog](http://api.danielfang.org/blog), [/code](http://api.danielfang.org/code), [/location](http://api.danielfang.org/location), [/photos](http://api.danielfang.org/photos), [/twitter](http://api.danielfang.org/twitter), [/btc](http://api.danielfang.org/btc), [/keybase](http://api.danielfang.org/keybase), and [/gplus](http://api.danielfang.org/gplus).
 
 Check out a [basic client](http://danielfang.org) for this API.
 
@@ -18,7 +18,7 @@ If you're building a personal website, connect to your API and pull any data you
 
 Our API endpoints are set up in two files: me.json, and config.json.
 
-me.json (or .js) is an object automatically hosted on the root path "/" and represents any information you want to expose about yourself, independent of any integrations you choose.
+me.json is a JSON object automatically hosted on the root path "/" and represents any information you want to expose about yourself, independent of any integrations you choose.
 
 Simple me.json
 ```json
@@ -27,7 +27,7 @@ Simple me.json
 }
 ```
 
-config.json (or .js) is where the fun starts. Using [custom middleware](#custom-middleware), you can attach the data pulled from various social media feeds to specific endpoints in your API. Some APIs will require authentication, so there is a [section](#integration-guides) dedicated to getting the proper keys and redirect URIs set up for each integration below. You'll see that each module is associated with a "path" (what the endpoint for this integration will be) and various "data" fields required to authenticate yourself to these APIs. Over time, this process will be streamlined.
+config.json is where the fun starts. Using [custom middleware](#custom-middleware), you can attach the data pulled from various social media feeds to specific endpoints in your API. Some APIs will require authentication, so there is a [section](#integration-guides) dedicated to getting the proper keys and redirect URIs set up for each integration below. You'll see that each module is associated with a "path" (what the endpoint for this integration will be) and various "data" fields required to authenticate yourself to these APIs. Over time, this process will be streamlined.
 
 Simple config.json
 ```json
@@ -192,9 +192,7 @@ For this configuration, I am hosting the Foursquare module at "http://api.foo.co
             "apiKey": "aaa",
             "apiSecret": "bbb"
         },
-        "account": "My Wallet",
-        "txnLimit": 5,
-        "addrLimit": 5
+        "accountName": "My Wallet"
     }
 }
 ```
@@ -262,7 +260,6 @@ var Github = {
 					if (err || response.statusCode != 200) return handleError(err, res);
 					var data = JSON.parse(body);
 					cache.put('github', data, 1000 * 60 * 2);
-					console.log('cache miss');
 					return res.json(data);
 				});
 			}

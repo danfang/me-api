@@ -28,8 +28,8 @@ var Foursquare = {
         var fs = getFoursquare(req, this);
         fs.Users.getCheckins('self', {}, accessToken, function(err, checkins) {
           if (err) return handleError(err, res);
+
           cache.put('foursquare', checkins, DEFAULT_CACHE_MSEC);
-          console.log('cache miss');
           res.json(checkins);
         });
       }
@@ -39,6 +39,7 @@ var Foursquare = {
       path: '/login',
       handler: function(req, res) {
         if (this.accessToken) return handleError('This user already has a valid access token', res);
+
         var fs = getFoursquare(req, this);
         res.redirect(fs.getAuthClientRedirectUrl());
       }
@@ -48,6 +49,7 @@ var Foursquare = {
       path: '/login/redirect',
       handler: function(req, res) {
         if (this.accessToken) return handleError('This user already has a valid access token', res);
+
         var fs = getFoursquare(req, this);
         fs.getAccessToken({ code: req.query.code }, function(err, accessToken) {
           if (err) return handleError(err, res);

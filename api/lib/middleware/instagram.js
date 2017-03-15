@@ -20,9 +20,9 @@ var Instagram = {
         ig.use(this.secrets);
         ig.user_self_media_recent(function(err, media) {
           if (err) return handleError(err, res);
+
           var data = { photos: media };
           cache.put('instagram', data, DEFAULT_CACHE_MSEC);
-          console.log('cache miss');
           res.json(data);
         });
       }

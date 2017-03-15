@@ -1,6 +1,6 @@
 {
   "name": "me-api-server",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "lib/app.js",
   "description": "A personal API with custom integrations",
   "bin": {
@@ -12,17 +12,17 @@
     "test": "grunt"
   },
   "dependencies": {
-    "coinbase": "^1.0.2",
-    "debug": "~2.2.0",
-    "express": "~4.12.4",
-    "googleapis": "^2.0.5",
+    "coinbase": "^2.0.6",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "googleapis": "^18.0.0",
     "instagram-node": "^0.5.7",
     "memory-cache": "^0.1.2",
     "minimist": "^1.2.0",
-    "morgan": "~1.5.3",
+    "morgan": "~1.8.1",
     "node-foursquare": "^0.3.0",
     "request": "^2.55.0",
-    "twit": "^1.1.20"
+    "twit": "^2.2.5"
   },
   "author": "Daniel Fang <danfang@uw.edu>",
   "license": "MIT",
@@ -31,14 +31,14 @@
     "url": "https://github.com/danfang/api-me.git"
   },
   "devDependencies": {
-    "chai": "^2.3.0",
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.2",
-    "grunt-jscs": "^2.1.0",
-    "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.2.5",
-    "mockery": "^1.4.0",
+    "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-jscs": "^3.0.1",
+    "grunt-mocha-test": "^0.13.2",
+    "mocha": "^3.2.0",
+    "mockery": "^2.0.0",
     "sinon": "^1.16.1",
-    "supertest": "^1.0.1"
+    "supertest": "^3.0.0"
   }
 }
