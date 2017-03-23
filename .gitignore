@@ -28,12 +28,8 @@ build/Release
 node_modules
 
 # Config json files
-api/me.json
-api/modules.json
-api/config.json
-api/me.js
-api/modules.js
-api/config.js
+me.json
+config.json
 
 # Sass extras
 .sass-cache
