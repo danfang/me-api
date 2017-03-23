@@ -4,15 +4,15 @@
 [![NPM version](https://img.shields.io/npm/v/me-api-server.svg?style=flat)](https://www.npmjs.com/package/me-api-server)
 [![Build Status](https://travis-ci.org/danfang/me-api.svg?branch=master)](https://travis-ci.org/danfang/me-api)
 
-Me API is a __personal API__ built on Node.js that allows for __extensible integrations__.
+Me API is a __customizable API__ that serves as a repository for personal data. It also supports __extensible integrations__ as additional streams of data.
 
 Check out an [example](http://api.danielfang.org) personal API. The endpoints are [/blog](http://api.danielfang.org/blog), [/code](http://api.danielfang.org/code), [/location](http://api.danielfang.org/location), [/photos](http://api.danielfang.org/photos), [/twitter](http://api.danielfang.org/twitter), [/btc](http://api.danielfang.org/btc), [/keybase](http://api.danielfang.org/keybase), and [/gplus](http://api.danielfang.org/gplus).
 
-Check out a [basic client](http://danielfang.org) for this API.
+[This personal website](http://danielfang.org) serves as a basic client for the above API.
 
-This is a central repository for your entire online profile. You get to host the content how you want - what endpoints you want exposed and what data you want accessible.
+Me API can be used as a central repository for an online profile - you can choose what endpoints you want exposed and what data you want accessible.
 
-If you're building a personal website, connect to your API and pull any data you want streamed to your website. Me API essentially detaches your public information from the social networking accounts they live on and aggregates them in a programmable fashion. Give and get access to your health, location, statuses, photos, blog posts, [anything] with full access-control over your content.
+If you're building a personal website, connect to your API and pull any data you want streamed to your website. Me API essentially detaches your public information from the social networking accounts they live on and aggregates them in a programmable fashion. Me API supports access to your health, location, statuses, photos, blog posts, [anything] with full access-control over your content.
 
 ## Data Representation
 
@@ -27,7 +27,7 @@ Simple me.json
 }
 ```
 
-config.json is where the fun starts. Using [custom middleware](#custom-middleware), you can attach the data pulled from various social media feeds to specific endpoints in your API. Some APIs will require authentication, so there is a [section](#integration-guides) dedicated to getting the proper keys and redirect URIs set up for each integration below. You'll see that each module is associated with a "path" (what the endpoint for this integration will be) and various "data" fields required to authenticate yourself to these APIs. Over time, this process will be streamlined.
+config.json is where the customization begins. Using [custom middleware](#custom-middleware), you can attach the data pulled from various social media feeds to specific endpoints in your API. Some APIs will require authentication, so there is a [section](#integration-guides) dedicated to getting the proper keys and redirect URIs set up for each integration below. You'll see that each module is associated with a "path" (what the endpoint for this integration will be) and various "data" fields required to authenticate yourself to these APIs. Over time, this process will be streamlined.
 
 Simple config.json
 ```json
@@ -37,13 +37,13 @@ Simple config.json
      },
      "modules": {
          "medium": {
-             "path": "/blog",
+             "path": "blog",
              "data": {
                  "me": "@myusername"
              }
          },
          "github": {
-             "path": "/code",
+             "path": "code",
              "data": {
                  "me": "myusername"
              }
@@ -68,13 +68,7 @@ This will run the API on given port. Using the config.json (in the directory you
 - /blog running the Medium module
 - /code running the Github module
 
-For a live demo, go to [my API](http://api.danielfang.org) to see more integrations.
-
-## External Client
-
-In the client/ folder, there is a basic React application that makes AJAX calls to your own API. This Cross-Domain access is allowed by default.
-
-For a live demo, check out this [basic client](http://danielfang.org/) to see the modules rendered in real time.
+For a live demo, go to [the example API](http://api.danielfang.org) to see more integrations.
 
 ## Integration Guides
 
