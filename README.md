@@ -5,9 +5,9 @@
 
 Me API is a **customizable API** that serves as a repository for personal data. It also supports **extensible integrations** as additional streams of data.
 
-Check out an [example](http://api.danielfang.org) personal API. The endpoints are [/blog](http://api.danielfang.org/blog), [/code](http://api.danielfang.org/code), [/location](http://api.danielfang.org/location), [/photos](http://api.danielfang.org/photos), [/twitter](http://api.danielfang.org/twitter), [/btc](http://api.danielfang.org/btc), [/keybase](http://api.danielfang.org/keybase), and [/gplus](http://api.danielfang.org/gplus).
+Check out an [example](https://api.danielfang.org) personal API. The endpoints are [/code](https://api.danielfang.org/code), [/location](https://api.danielfang.org/location), [/twitter](http://api.danielfang.org/twitter), and [/keybase](http://api.danielfang.org/keybase).
 
-[This personal website](http://danielfang.org) serves as a basic client for the above API.
+[This personal website](https://danielfang.org) serves as a basic client for the above API.
 
 Me API can be used as a central repository for an online profile - you can choose what endpoints you want exposed and what data you want accessible.
 
