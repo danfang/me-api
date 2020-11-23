@@ -21,7 +21,8 @@
     "morgan": "^1.10.0",
     "node-foursquare": "^0.3.3",
     "request": "^2.88.2",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "lodash": "^4.17.19"
   },
   "author": "Daniel Fang <danfang@uw.edu>",
   "license": "MIT",
