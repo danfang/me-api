@@ -1,6 +1,6 @@
 {
   "name": "me-api-server",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "main": "lib/app.js",
   "description": "A personal API with custom integrations",
   "bin": {
