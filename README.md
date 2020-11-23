@@ -1,10 +1,9 @@
 # Me API
 
-
 [![NPM version](https://img.shields.io/npm/v/me-api-server.svg?style=flat)](https://www.npmjs.com/package/me-api-server)
 [![Build Status](https://travis-ci.org/danfang/me-api.svg?branch=master)](https://travis-ci.org/danfang/me-api)
 
-Me API is a __customizable API__ that serves as a repository for personal data. It also supports __extensible integrations__ as additional streams of data.
+Me API is a **customizable API** that serves as a repository for personal data. It also supports **extensible integrations** as additional streams of data.
 
 Check out an [example](http://api.danielfang.org) personal API. The endpoints are [/blog](http://api.danielfang.org/blog), [/code](http://api.danielfang.org/code), [/location](http://api.danielfang.org/location), [/photos](http://api.danielfang.org/photos), [/twitter](http://api.danielfang.org/twitter), [/btc](http://api.danielfang.org/btc), [/keybase](http://api.danielfang.org/keybase), and [/gplus](http://api.danielfang.org/gplus).
 
@@ -21,35 +20,37 @@ Our API endpoints are set up in two files: me.json, and config.json.
 me.json is a JSON object automatically hosted on the root path "/" and represents any information you want to expose about yourself, independent of any integrations you choose.
 
 Simple me.json
+
 ```json
 {
-    "name":"Daniel Fang"
+  "name": "Daniel Fang"
 }
 ```
 
 config.json is where the customization begins. Using [custom middleware](#custom-middleware), you can attach the data pulled from various social media feeds to specific endpoints in your API. Some APIs will require authentication, so there is a [section](#integration-guides) dedicated to getting the proper keys and redirect URIs set up for each integration below. You'll see that each module is associated with a "path" (what the endpoint for this integration will be) and various "data" fields required to authenticate yourself to these APIs. Over time, this process will be streamlined.
 
 Simple config.json
+
 ```json
- {
-     "settings": {
-         "host": "localhost:3000"
-     },
-     "modules": {
-         "medium": {
-             "path": "blog",
-             "data": {
-                 "me": "@myusername"
-             }
-         },
-         "github": {
-             "path": "code",
-             "data": {
-                 "me": "myusername"
-             }
-         }
-     }
- }
+{
+  "settings": {
+    "host": "localhost:3000"
+  },
+  "modules": {
+    "medium": {
+      "path": "blog",
+      "data": {
+        "me": "@myusername"
+      }
+    },
+    "github": {
+      "path": "code",
+      "data": {
+        "me": "myusername"
+      }
+    }
+  }
+}
 ```
 
 ## Installing and Running
@@ -64,6 +65,7 @@ me-api-server [port] -m <me.json file> -c <config.json file> ; Run the API serve
 ```
 
 This will run the API on given port. Using the config.json (in the directory you're running the server from) in the example above, you will get:
+
 - / hosting "me.json"
 - /blog running the Medium module
 - /code running the Github module
@@ -75,6 +77,7 @@ For a live demo, go to [the example API](http://api.danielfang.org) to see more 
 ### Github
 
 1. Enter in your github username as the "me" field in config.json
+
 ```json
 "github": {
 	"path": "code",
@@ -87,6 +90,7 @@ For a live demo, go to [the example API](http://api.danielfang.org) to see more 
 ### Medium
 
 1. Enter in your medium username with the @ symbol as the "me" field in config.json
+
 ```json
 "medium": {
 	"path": "blog",
@@ -122,6 +126,7 @@ For a live demo, go to [the example API](http://api.danielfang.org) to see more 
 
 1. Go to the [Instagram Clients](https://instagram.com/developer/clients/manage/) page and create a new client.
 2. On the app creation page, make sure the "Redirect URI" field points to [settings.host] + [instagram.path] + "/login/redirect" in your config.json file and that this is the same host as where you are hosting your API.
+
 ```json
 "settings": {
 	"host": "api.foo.com"
@@ -141,6 +146,7 @@ For a live demo, go to [the example API](http://api.danielfang.org) to see more 
 	}
 }
 ```
+
 For this configuration, I am hosting the Instagram module at "http://api.foo.com/photos". Thus, the redirect URI I should enter for my app is "http://api.foo.com/photos/login/redirect".
 
 4. After the app is set up, copy the "Client ID" and "Client Secret" into config.json.
@@ -151,6 +157,7 @@ For this configuration, I am hosting the Instagram module at "http://api.foo.com
 
 1. Go to the [Apps Page](https://foursquare.com/developers/apps) for Foursquare and create a new app.
 2. On the app creation page, make sure the "Redirect URI" field points to [settings.host] + [foursquare.path] + "/login/redirect" in your config.json file and that this is the same host as where you are hosting your API.
+
 ```json
 "settings": {
 	"host": "api.foo.com"
@@ -169,16 +176,15 @@ For this configuration, I am hosting the Instagram module at "http://api.foo.com
 	},
 }
 ```
-For this configuration, I am hosting the Foursquare module at "http://api.foo.com/location". Thus, the redirect URI I should enter for my app is "http://api.foo.com/location/login/redirect".
-3. Once you've set up your app, copy the "Client id" and "Client secret" from your app into config.json in the appropriate "foursquare" module.
-4. Once this is complete, visit "http://api.foo.com/location/login" to authorize usage of your newly created Foursquare app.
-5. Copy the newly returned access token into config.json to finish integrating Foursquare.
+
+For this configuration, I am hosting the Foursquare module at "http://api.foo.com/location". Thus, the redirect URI I should enter for my app is "http://api.foo.com/location/login/redirect". 3. Once you've set up your app, copy the "Client id" and "Client secret" from your app into config.json in the appropriate "foursquare" module. 4. Once this is complete, visit "http://api.foo.com/location/login" to authorize usage of your newly created Foursquare app. 5. Copy the newly returned access token into config.json to finish integrating Foursquare.
 
 ### Coinbase
 
 1. Go to your Coinbase Account Settings and generate an API Key+Secret pair
 2. Allow "transactions" and "addresses" in the key settings.
 3. Fill out config.json
+
 ```json
 "coinbase": {
     "path": "btc",
@@ -195,6 +201,7 @@ For this configuration, I am hosting the Foursquare module at "http://api.foo.co
 ### Keybase
 
 1. Enter in your keybase username as the "me" field in config.json
+
 ```json
 "keybase": {
     "path": "/encrypt",
@@ -204,21 +211,8 @@ For this configuration, I am hosting the Foursquare module at "http://api.foo.co
 }
 ```
 
-### Google+
-
-1. Enter in your Google+ canonical name (if exists) or user-id as the "me" field in config.json
-```json
-"googleplus": {
-    "path": "/social",
-    "data": {
-        "apikey": "Your API-Key",
-        "me": "+username"
-    }
-}
-```
-
-
 Not Completed/Potential Integrations
+
 - Runkeeper
 - Venmo
 - Fitbit
@@ -228,39 +222,42 @@ Not Completed/Potential Integrations
 The most powerful part of API Me is the possibility of making and using custom middleware for any kind of social media or analytics purposes (think Slack integrations). To do this, there is a specific format for middleware, shown below. To see their implementations, clone the repo - they live in the api/lib/middleware directory.
 
 ```javascript
-var request = require('request');
-var cache = require('memory-cache');
-var handleError = require('../util/util');
+var request = require("request");
+var cache = require("memory-cache");
+var handleError = require("../util/util");
 
 var Github = {
-	source: "github", // The name of your module, which will be referenced in config.json
+  source: "github", // The name of your module, which will be referenced in config.json
 
-	// Below are all available routes for this piece of middleware. Notice the root "path" should be "", so that the user
-	// can mount this module on any path in config.json. For example, if the user mounts this module on "/code",
-	// the following route will handle "/code" and an additional route with path "/stats" will handle "/code/stats".
-	routes: [
-		{
-			method: "GET",
-			path: "",
-			// The handler operates like any normal express route with a request, response, and next.
-			handler: function(req, res) {
-				// Leveraging caches is important to not exceed rate limits on various APIs
-				var cachedResult = cache.get('github');
-				if (cachedResult) return res.json(cachedResult);
+  // Below are all available routes for this piece of middleware. Notice the root "path" should be "", so that the user
+  // can mount this module on any path in config.json. For example, if the user mounts this module on "/code",
+  // the following route will handle "/code" and an additional route with path "/stats" will handle "/code/stats".
+  routes: [
+    {
+      method: "GET",
+      path: "",
+      // The handler operates like any normal express route with a request, response, and next.
+      handler: function (req, res) {
+        // Leveraging caches is important to not exceed rate limits on various APIs
+        var cachedResult = cache.get("github");
+        if (cachedResult) return res.json(cachedResult);
 
-				// Referencing "this" accesses the "data" object in config.json. This is how to access
-				// user-specified keys and usernames.
-				var url = 'https://api.github.com/users/' + this.me + "/events/public";
-				request({ url: url, headers: { 'User-Agent': this.me }}, function(err, response, body) {
-					if (err || response.statusCode != 200) return handleError(err, res);
-					var data = JSON.parse(body);
-					cache.put('github', data, 1000 * 60 * 2);
-					return res.json(data);
-				});
-			}
-		}
-	],
-}
+        // Referencing "this" accesses the "data" object in config.json. This is how to access
+        // user-specified keys and usernames.
+        var url = "https://api.github.com/users/" + this.me + "/events/public";
+        request(
+          { url: url, headers: { "User-Agent": this.me } },
+          function (err, response, body) {
+            if (err || response.statusCode != 200) return handleError(err, res);
+            var data = JSON.parse(body);
+            cache.put("github", data, 1000 * 60 * 2);
+            return res.json(data);
+          }
+        );
+      },
+    },
+  ],
+};
 
 module.exports = Github;
 ```
