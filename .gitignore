@@ -33,3 +33,6 @@ config.json
 
 # Sass extras
 .sass-cache
+
+.serverless
+.DS_Store

@@ -1,0 +1,20 @@
+service: me-api
+
+provider:
+  name: aws
+  deploymentMethod: direct
+  runtime: nodejs18.x
+  memorySize: 256
+  region: us-west-2
+  httpApi:
+    cors: true
+
+functions:
+  api:
+    handler: ./lambda.handler
+    events:
+      - httpApi: "*"
+    environment:
+      ME_FILE: me.json
+      CONFIG_FILE: config.json
+      NODE_ENV: production
